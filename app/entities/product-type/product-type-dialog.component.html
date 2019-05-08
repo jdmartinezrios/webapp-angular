@@ -1,0 +1,59 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title font-weight-bold text-success" id="myProductTypeLabel" jhiTranslate="delcampoApp.productType.home.createOrEditLabel">Create or edit a Product Type</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!productType.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="productType.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.productType.category" for="field_category">Category</label>
+            <select class="form-control" id="field_category" name="category" [(ngModel)]="productType.categoryId" required>
+                <option [ngValue]="null"></option>
+                <option [ngValue]="productCategoryOption.id" *ngFor="let productCategoryOption of productcategories; trackBy: trackProductCategoryById">{{productCategoryOption.productCategoryName}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.productType.productTypeName" for="field_productTypeName" [ngbTooltip]="'delcampoApp.productType.help.productTypeName' | translate">Product Type Name</label>
+            <input type="text" class="form-control" name="productTypeName" id="field_productTypeName"
+                [(ngModel)]="productType.productTypeName" required maxlength="140"/>
+            <div [hidden]="!(editForm.controls.productTypeName?.dirty && editForm.controls.productTypeName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productTypeName?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productTypeName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 140 }">
+                   This field cannot be longer than 140 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.productType.productTypeEnabled" [ngbTooltip]="'delcampoApp.productType.help.productTypeEnabled' | translate">Product Type Enabled</label>
+            <input type="checkbox" class="form-control cmn-toggle cmn-toggle-round" name="productTypeEnabled" id="field_productTypeEnabled"
+                [(ngModel)]="productType.productTypeEnabled" />
+                <label for="field_productTypeEnabled"></label>
+            <div [hidden]="!(editForm.controls.productTypeEnabled?.dirty && editForm.controls.productTypeEnabled?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productTypeEnabled?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+
+<div *ngIf="shoppingCar">
+    <h2><span jhiTranslate="delcampoApp.shoppingCar.detail.title">Shopping Car</span> {{shoppingCar.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.shoppingCar.addDate">Add Date</span></dt>
+        <dd>
+            <span>{{shoppingCar.addDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.shoppingCar.quantity">Quantity</span></dt>
+        <dd>
+            <span>{{shoppingCar.quantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.shoppingCar.product">Product</span></dt>
+        <dd>
+            <div *ngIf="shoppingCar.productId">
+                <a [routerLink]="['/product', shoppingCar.productId]">{{shoppingCar.productName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.shoppingCar.user">User</span></dt>
+        <dd>
+            {{shoppingCar.userLogin}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'shopping-car/'+ shoppingCar.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

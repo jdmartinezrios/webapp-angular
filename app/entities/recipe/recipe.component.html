@@ -1,0 +1,97 @@
+<div>
+    <h2>
+        <span class="text-success" jhiTranslate="delcampoApp.recipe.home.title">Recipes</span>
+        <button class="btn btn-success float-right jh-create-entity create-recipe" [routerLink]="['/', { outlets: { popup: ['recipe-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="delcampoApp.recipe.home.createLabel">
+            Create new Recipe
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'delcampoApp.recipe.home.search' | translate }}">
+                    <button class="input-group-append btn btn-success" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="recipes">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span jhiTranslate="delcampoApp.recipe.name">Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="personsQuantity"><span jhiTranslate="delcampoApp.recipe.personsQuantity">Persons Quantity</span> <span class="fa fa-sort"></span></th>         
+            <th jhiSortBy="recipeEnabled"><span jhiTranslate="delcampoApp.recipe.recipeEnabled">Recipe Enabled</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="itemId"><span jhiTranslate="delcampoApp.recipe.item">Item</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let recipe of recipes ;trackBy: trackId">
+                <td><a [routerLink]="['../recipe', recipe.id ]">{{recipe.id}}</a></td>
+                <td>{{recipe.name}}</td>
+                <td>{{recipe.personsQuantity}}</td>               
+                <td>{{recipe.recipeEnabled}}</td>
+                <td>
+                    <div *ngIf="recipe.itemId">
+                        <a [routerLink]="['../recipe-item', recipe.itemId  ]" >{{recipe.itemId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <!-- <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../recipe', recipe.id ]"
+                                class="btn btn-success btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'recipe/'+ recipe.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-success btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'recipe/'+ recipe.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div> -->
+                    <div class="d-flex justify-content-around">
+                        <div [routerLink]="['../recipe', recipe.id ]" class="buttons-options">
+                            <span class="fa fa-eye"></span>
+                        </div>
+                        <div  [routerLink]="['/', { outlets: { popup: 'recipe/'+ recipe.id + '/edit'} }]"
+                              replaceUrl="true"
+                              queryParamsHandling="merge" class="buttons-options">
+                            <span class="fa fa-pencil"></span>
+                        </div>
+                        <div  [routerLink]="['/', { outlets: { popup: 'recipe/'+ recipe.id + '/delete'} }]"
+                              replaceUrl="true"
+                              queryParamsHandling="merge"
+                              class="buttons-options">
+                            <span class="fa fa-trash"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

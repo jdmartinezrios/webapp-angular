@@ -1,0 +1,519 @@
+@import 'bootstrap-variables';
+@import url('https://fonts.googleapis.com/css?family=Quattrocento+Sans');
+/* ==============================================================
+Bootstrap tweaks
+===============================================================*/
+body {
+    font-family: 'Quattrocento Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+body,
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 300px;
+}
+
+a {
+    color: #533f03;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #533f03;
+    font-weight: bold;
+}
+/*==========================================================================
+Background colors
+============================================================================*/
+.warning {
+    background-color: #FED700;
+}
+
+.brown {
+    color: #785026 !important;
+}
+
+.bg-navCampo {
+    background-color: rgba(0, 109, 0, .8);
+}
+
+.bg-success {
+    background-color: #007D00 !important;
+}
+
+.text-success{
+    color: #004D00 !important;
+}
+
+.btnView {
+    background-color: #59CF86;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #FF0000 !important;
+    color: #fff !important;
+}
+/* ==========================================================================
+Templates styles
+============================================================================ */
+.activateKey,
+.reset-request,
+.forbidden {
+    padding-top: 4em;
+    min-height: calc(100vh - 150px);
+}
+
+.finishActivate {
+    min-height: calc(100vh - 150px);
+    padding-top: 3em;
+}
+/* ==========================================================================
+Browser Upgrade Prompt
+========================================================================== */
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+/* ==========================================================================
+Generic styles
+========================================================================== */
+/* Error highlight on input fields */
+.ng-valid.required,
+.ng-valid[required] {
+    border-left: 5px solid green;
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid red;
+}
+/* other generic styles */
+.jh-card {
+    padding: 1.5%;
+    margin-top: 20px;
+    border: none;
+}
+
+.error {
+    color: white;
+    background-color: red;
+}
+
+.pad {
+    padding: 10px;
+}
+
+.w-40 {
+    width: 40% !important;
+}
+
+.w-60 {
+    width: 60% !important;
+}
+
+.break {
+    white-space: normal;
+    word-break: break-all;
+}
+
+.readonly {
+    background-color: #eee;
+    opacity: 1;
+}
+
+.footer {
+    // border-top: 1px solid rgba(0,0,0,.125);
+    // background-color: #efefef;
+    color: #006D00;
+}
+
+.link-youtube{
+  font-size: 2em !important;
+  color: #004D00 !important;
+  margin-top: .2em;
+  margin-left: .2em;
+}
+
+.bg-firstFooter{
+    background-color: #fff !important;
+}
+/* ==========================================================================
+make sure browsers use the pointer cursor for anchors, even with no href
+========================================================================== */
+a:hover {
+    cursor: pointer;
+}
+
+.hand,
+[jhisortby] {
+    cursor: pointer;
+}
+/* ==========================================================================
+Custom alerts for notification
+========================================================================== */
+.alerts {
+    .alert {
+        text-overflow: ellipsis;
+
+        pre {
+            background: none;
+            border: none;
+            font: inherit;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+        }
+
+        .popover pre {
+            font-size: 10px;
+        }
+    }
+
+    .toast {
+        position: fixed;
+        width: 100%;
+
+        &.left {
+            left: 5px;
+        }
+
+        &.right {
+            right: 5px;
+        }
+
+        &.top {
+            top: 55px;
+        }
+
+        &.bottom {
+            bottom: 55px;
+        }
+    }
+}
+@media screen and (min-width: 480px) {
+    .alerts .toast {
+        width: 50%;
+    }
+}
+/* ==========================================================================
+entity tables helpers
+========================================================================== */
+/* Remove Bootstrap padding from the element
+   http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
+@mixin no-padding($side) {
+    @if $side == 'all' {
+        .no-padding {
+            padding: 0 !important;
+        }
+    } @else {
+        .no-padding-#{$side} {
+            padding-#{$side}: 0 !important;
+        }
+    }
+}
+@include no-padding("left");
+@include no-padding("right");
+@include no-padding("top");
+@include no-padding("bottom");
+@include no-padding("all");
+/* bootstrap 3 input-group 100% width
+   http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
+.width-min {
+    width: 1% !important;
+}
+/* Makes toolbar not wrap on smaller screens
+   http://www.sketchingwithcss.com/samplechapter/cheatsheet.html#right */
+.flex-btn-group-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+}
+/* ==========================================================================
+entity detail page css
+========================================================================== */
+.row.jh-entity-details > {
+    dd {
+        margin-bottom: 15px;
+    }
+}
+@media screen and (min-width: 768px) {
+    .row.jh-entity-details > {
+        dt {
+            margin-bottom: 15px;
+        }
+
+        dd {
+            border-bottom: 1px solid #eee;
+            padding-left: 180px;
+            margin-left: 0;
+        }
+    }
+}
+/* ==========================================================================
+ui bootstrap tweaks
+========================================================================== */
+.carousel,
+.nav,
+.pagination,
+.panel-title a {
+    cursor: pointer;
+}
+
+.datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
+.uib-datepicker-popup > li > div.uib-datepicker > table .btn-default {
+    border: 0;
+}
+
+.datetime-picker-dropdown > li.date-picker-menu div > table:focus,
+.uib-datepicker-popup > li > div.uib-datepicker > table:focus {
+    outline: none;
+}
+
+.thread-dump-modal-lock {
+    max-width: 450px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* ==========================================================================
+Social button
+========================================================================== */
+.jh-btn-social {
+    margin-bottom: 5px;
+}
+
+.jh-btn-google {
+    background-color: #dd4b39;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-google.active,
+.jh-btn-google:active,
+.jh-btn-google:focus,
+.jh-btn-google:hover,
+.open > .dropdown-toggle.jh-btn-google {
+    background-color: #c23321;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-facebook {
+    background-color: #3b5998;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-facebook.active,
+.jh-btn-facebook:active,
+.jh-btn-facebook:focus,
+.jh-btn-facebook:hover,
+.open > .dropdown-toggle.jh-btn-facebook {
+    background-color: #2d4373;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-twitter {
+    background-color: #55acee;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-twitter.active,
+.jh-btn-twitter:active,
+.jh-btn-twitter:focus,
+.jh-btn-twitter:hover,
+.open > .dropdown-toggle.jh-btn-twitter {
+    background-color: #2795e9;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+/* ==========================================================================
+Autocomplete button - Primeng
+========================================================================== */
+body .ui-autocomplete .ui-autocomplete-dropdown.ui-button.ui-button-icon-only {
+    /*background-color: transparent;*/
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    /*height: 1.5em;
+    width: 1.5em;*/
+    padding: 0;
+    right: 0;
+    bottom: 0;
+    margin-right: 0;
+    position: absolute;
+}
+/* jhipster-needle-scss-add-main JHipster will add new css style */
+.modal-content {    
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
+}
+/* 
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+} */
+
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0);
+    }
+
+    to {
+        -webkit-transform: scale(1);
+    }
+}
+
+.list-group-item.active {
+    color: #fff !important;
+}
+
+#nav-tabContent {
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 424px;
+    height: 100%;
+    padding: 1em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.modal-product .modal-lg {
+    width: 75% !important;
+    max-width: calc(75%);
+}
+
+.table thead th {
+    min-width: 11em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.table tbody tr td {
+    text-align: center;
+}
+
+.table-striped tbody tr:nth-of-type(odd){
+    background-color: #f8f9fa !important;
+}
+
+.buttons-options {
+    color: #785026;
+    outline: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.cmn-toggle {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+}
+
+.cmn-toggle + label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+
+input.cmn-toggle-round + label {
+    padding: 2px;
+    width: 70px;
+    height: 30px;
+    background-color: #dddddd;
+    border-radius: 60px;
+}
+
+input.cmn-toggle-round + label:after,
+input.cmn-toggle-round + label:before {
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: 1px;
+    content: "";
+}
+
+input.cmn-toggle-round + label:before {
+    right: 1px;
+    background-color: #f1f1f1;
+    border-radius: 60px;
+    transition: background 0.4s;
+}
+
+input.cmn-toggle-round + label:after {
+    width: 28px;
+    background-color: #fff;
+    border-radius: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: margin 0.4s;
+}
+
+input.cmn-toggle-round:checked + label:before {
+    background-color: #59AE00;
+}
+
+input.cmn-toggle-round:checked + label:after {
+    margin-left: 40px;
+}
+
+.dropdown-item:active {
+    background: transparent !important;
+    color: #000;
+}
+
+.swiper-pagination-bullet-active {
+    background: #004D00 !important;
+}
+
+.tb-recipes thead th {
+    min-width: 100%;
+    text-align: center;
+}
+
+.tb-recipes tbody tr td {
+    text-align: center;
+}
+@media screen and (max-width: 576px) {
+    .modal-product .modal-lg {
+        width: 100% !important;
+        max-width: calc(100%);
+    }
+}
+
+@media screen and (min-width: 1310px) {
+  .modal-product .modal-lg {
+      width: 60% !important;
+      max-width: calc(60%);
+  }
+}
+
+.ui-editor-toolbar.ui-widget-header.ui-corner-top.ql-toolbar.ql-snow {
+    display: none;
+}

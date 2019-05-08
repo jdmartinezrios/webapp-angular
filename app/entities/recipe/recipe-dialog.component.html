@@ -1,0 +1,250 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title text-success font-weight-bold" id="myRecipeLabel" jhiTranslate="delcampoApp.recipe.home.createOrEditLabel">Create or edit a Recipe</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-row">
+          <div class="form-group" [hidden]="!recipe.id" [ngClass]="{'col-md-4': recipe.id}">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+            [(ngModel)]="recipe.id" readonly />
+          </div>
+          <div class="form-group" [ngClass]="{'col-md-4': recipe.id, 'col-md-6': !recipe.id}">
+              <label class="form-control-label" jhiTranslate="delcampoApp.recipe.name" for="field_name" [ngbTooltip]="'delcampoApp.recipe.help.name' | translate">Name</label>
+              <input type="text" class="form-control" name="name" id="field_name"
+                  [(ngModel)]="recipe.name" required maxlength="40"/>
+              <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                  <small class="form-text text-danger"
+                     [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                     This field is required.
+                  </small>
+                  <small class="form-text text-danger"
+                     [hidden]="!editForm.controls.name?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                     This field cannot be longer than 40 characters.
+                  </small>
+              </div>
+          </div>
+          <div class="form-group" [ngClass]="{'col-md-4': recipe.id, 'col-md-6': !recipe.id}">
+              <label class="form-control-label" jhiTranslate="delcampoApp.recipe.personsQuantity" for="field_personsQuantity" [ngbTooltip]="'delcampoApp.recipe.help.personsQuantity' | translate">Persons Quantity</label>
+              <input type="number" class="form-control" name="personsQuantity" id="field_personsQuantity"
+                  [(ngModel)]="recipe.personsQuantity" required min="0"/>
+              <div [hidden]="!(editForm.controls.personsQuantity?.dirty && editForm.controls.personsQuantity?.invalid)">
+                  <small class="form-text text-danger"
+                     [hidden]="!editForm.controls.personsQuantity?.errors?.required" jhiTranslate="entity.validation.required">
+                     This field is required.
+                  </small>
+                  <small class="form-text text-danger"
+                      [hidden]="!editForm.controls.personsQuantity?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                      This field should be at least 0.
+                  </small>
+                  <small class="form-text text-danger"
+                      [hidden]="!editForm.controls.personsQuantity?.errors?.number" jhiTranslate="entity.validation.number">
+                      This field should be a number.
+                  </small>
+              </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.recipe.description" for="field_description" [ngbTooltip]="'delcampoApp.recipe.help.description' | translate">Description</label>
+            <textarea class="form-control" name="description" id="field_description"
+                [(ngModel)]="recipe.description" ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.recipe.recipeEnabled" [ngbTooltip]="'delcampoApp.recipe.help.recipeEnabled' | translate">Recipe Enabled</label>
+            <input type="checkbox" class="form-control cmn-toggle cmn-toggle-round" name="recipeEnabled" id="field_recipeEnabled"
+                [(ngModel)]="recipe.recipeEnabled" />
+                <label for="field_recipeEnabled"></label>
+            <div [hidden]="!(editForm.controls.recipeEnabled?.dirty && editForm.controls.recipeEnabled?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.recipeEnabled?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+      <!-- Este input creo que es inecesario
+
+         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.recipe.item" for="field_item">Item</label>
+            <select class="form-control" id="field_item" name="item" [(ngModel)]="recipe.itemId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="recipeItemOption.id" *ngFor="let recipeItemOption of recipeitems; trackBy: trackRecipeItemById">{{recipeItemOption.id}}</option>
+            </select>
+        </div> -->
+        <div class="form-group">
+            <label jhiTranslate="delcampoApp.recipe.youtube" for="field_youtube">Youtube</label>
+            <select class="form-control" id="field_youtube" multiple name="youtube" [(ngModel)]="recipe.youtubes">
+                <option [ngValue]="getSelected(recipe.youtubes, youtubeVideoOption)" *ngFor="let youtubeVideoOption of youtubevideos; trackBy: trackYoutubeVideoById">{{youtubeVideoOption.youtubeName}}</option>
+            </select>
+        </div>
+
+        <!-- Gestion de ingredientes -->
+        <div class="form-group" *ngIf="!recipe.id">
+
+          <!-- Seleccion de opcion -->
+          <div>
+            <div class="form-group">
+                <a (click) = "selectOption('add')" class="text-success">
+                    <span class="fa fa-plus"></span>&nbsp;
+                    <span>AGREGAR UN INGREDIENTE</span>
+                </a>
+            </div>
+            <!-- Agregar un nuevo ingrediente -->
+            <div *ngIf="recipeItemsOptions.add">
+                <form name="editItemForm" role="form" novalidate (ngSubmit)="addRecipeItem()" #editItemForm="ngForm">
+                    <div class="modal-body">
+                        <jhi-alert-error></jhi-alert-error>
+                        <div class="form-group" [hidden]="!recipeItem.id">
+                            <label for="id" jhiTranslate="global.field.id">ID</label>
+                            <input type="text" class="form-control" id="id" name="id"
+                                   [(ngModel)]="recipeItem.id" readonly />
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                              <label class="form-control-label" jhiTranslate="delcampoApp.recipeItem.productNameText" for="field_productNameText" [ngbTooltip]="'delcampoApp.recipeItem.help.productNameText' | translate">Product Name Text</label>
+                              <input type="text" class="form-control" name="productNameText" id="field_productNameText"
+                                     [(ngModel)]="recipeItem.productNameText" maxlength="40"/>
+                              <div [hidden]="!(editItemForm.controls.productNameText?.dirty && editItemForm.controls.productNameText?.invalid)">
+                                  <small class="form-text text-danger"
+                                         [hidden]="!editItemForm.controls.productNameText?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                                      This field cannot be longer than 40 characters.
+                                  </small>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <label class="form-control-label" jhiTranslate="delcampoApp.recipeItem.quantity" for="field_quantity" [ngbTooltip]="'delcampoApp.recipeItem.help.quantity' | translate">Quantity</label>
+                              <input type="number" class="form-control" name="quantity" id="field_quantity"
+                                     [(ngModel)]="recipeItem.quantity" required min="0"/>
+                              <div [hidden]="!(editItemForm.controls.quantity?.dirty && editItemForm.controls.quantity?.invalid)">
+                                  <small class="form-text text-danger"
+                                         [hidden]="!editItemForm.controls.quantity?.errors?.required" jhiTranslate="entity.validation.required">
+                                      This field is required.
+                                  </small>
+                                  <small class="form-text text-danger"
+                                         [hidden]="!editItemForm.controls.quantity?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                                      This field should be at least 0.
+                                  </small>
+                                  <small class="form-text text-danger"
+                                         [hidden]="!editItemForm.controls.quantity?.errors?.number" jhiTranslate="entity.validation.number">
+                                      This field should be a number.
+                                  </small>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                              <label class="form-control-label" jhiTranslate="delcampoApp.recipeItem.measurementUnit" for="field_measurementUnit" [ngbTooltip]="'delcampoApp.recipeItem.help.measurementUnit' | translate">Measurement Unit</label>
+                              <select class="form-control" name="measurementUnit" [(ngModel)]="recipeItem.measurementUnit" id="field_measurementUnit" >
+                                  <option value="LB">{{'delcampoApp.MeasurementUnit.LB' | translate}}</option>
+                                  <option value="KG">{{'delcampoApp.MeasurementUnit.KG' | translate}}</option>
+                                  <option value="UNIT">{{'delcampoApp.MeasurementUnit.UNIT' | translate}}</option>
+                              </select>
+                          </div>
+
+                          <div class="form-group col-md-6">
+                              <label class="form-control-label" jhiTranslate="delcampoApp.recipeItem.product" for="field_product">Product</label>
+                              <select class="form-control" id="field_product" name="product" [(ngModel)]="recipeItem.productId" >
+                                  <option [ngValue]="null"></option>
+                                  <option [ngValue]="productOption.id" *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.name}}</option>
+                              </select>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click) = "selectOption('add')">
+                            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" [disabled]="editItemForm.form.invalid || isSaving" class="btn btn-primary">
+                            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- fin agregar ingredientes -->
+            <div class="form-group">
+                <a (click) = "selectOption('list')" class="text-success">
+                    <span class="fa fa-plus"></span>&nbsp;
+                    <span>INGREDIENTES</span>
+                </a>
+            </div>
+            <!-- <button type="button" (click) = "selectOption('add')"></button>
+            <button type="button" (click) = "selectOption('list')"></button> -->
+          </div>
+          <!-- Los ingredientes agregados -->
+          <div *ngIf="recipeItemsOptions.list">
+              <table class="table table-striped tb-recipes" *ngIf="recipeitems.length > 0">
+                  <thead>
+                  <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                      <!-- th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th -->
+                      <th jhiSortBy="productNameText"><span jhiTranslate="delcampoApp.recipeItem.productNameText">Product Name Text</span> <span class="fa fa-sort"></span></th>
+                      <th jhiSortBy="quantity"><span jhiTranslate="delcampoApp.recipeItem.quantity">Quantity</span> <span class="fa fa-sort"></span></th>
+                      <th jhiSortBy="measurementUnit"><span jhiTranslate="delcampoApp.recipeItem.measurementUnit">Measurement Unit</span> <span class="fa fa-sort"></span></th>
+                      <th jhiSortBy="productName"><span jhiTranslate="delcampoApp.recipeItem.product">Product</span> <span class="fa fa-sort"></span></th>
+                      <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let recipeItem of recipeitems ;trackBy: trackId">
+                      <!-- td><a [routerLink]="['../recipe-item', recipeItem.id ]">{{recipeItem.id}}</a></td -->
+                      <td>{{recipeItem.productNameText}}</td>
+                      <td>{{recipeItem.quantity}}</td>
+                      <td jhiTranslate="{{'delcampoApp.MeasurementUnit.' + recipeItem.measurementUnit}}">{{recipeItem.measurementUnit}}</td>
+                      <td>
+                          <div *ngIf="recipeItem.productId">
+                              <a>{{recipeItem.productId}}</a>
+                          </div>
+                      </td>
+                      <td class="text-right">
+                          <!-- <div class="btn-group flex-btn-group-container">
+                              <button type="submit"
+                                      [routerLink]="['/', { outlets: { popup: 'recipe-item/'+ recipeItem.id + '/edit'} }]"
+                                      replaceUrl="true"
+                                      queryParamsHandling="merge"
+                                      class="btn btn-primary btn-sm">
+                                  <span class="fa fa-pencil"></span>
+                                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                              </button>
+                              <button type="submit"
+                                      [routerLink]="['/', { outlets: { popup: 'recipe-item/'+ recipeItem.id + '/delete'} }]"
+                                      replaceUrl="true"
+                                      queryParamsHandling="merge"
+                                      class="btn btn-danger btn-sm">
+                                  <span class="fa fa-remove"></span>
+                                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                              </button>
+                          </div> -->
+                        <div class="d-flex justify-content-between">                        
+                          <div [routerLink]="['/', { outlets: { popup: 'recipe-item/'+ recipeItem.id + '/edit'} }]"
+                          replaceUrl="true"
+                          queryParamsHandling="merge" class="buttons-options">
+                          <span class="fa fa-pencil"></span>
+                          </div>
+                          <div [routerLink]="['/', { outlets: { popup: 'recipe-item/'+ recipeItem.id + '/delete'} }]"
+                          replaceUrl="true"
+                          queryParamsHandling="merge" class="buttons-options">
+                          <span class="fa fa-trash"></span>
+                          </div>
+                        </div>
+                      </td>
+                  </tr>
+                  </tbody>
+              </table>
+              <div *ngIf="recipeitems.length < 1">
+                <h3>No ha agregado ningun ingrediente.</h3>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

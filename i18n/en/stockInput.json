@@ -1,0 +1,30 @@
+
+{
+    "delcampoApp": {
+        "stockInput" : {
+            "home": {
+                "title": "Stock Inputs",
+                "createLabel": "Create a new Stock Input",
+                "createOrEditLabel": "Create or edit a Stock Input",
+                "search": "Search for Stock Input"
+            },
+            "created": "A new Stock Input is created with identifier {{ param }}",
+            "updated": "A Stock Input is updated with identifier {{ param }}",
+            "deleted": "A Stock Input is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Stock Input {{ id }}?"
+            },
+            "detail": {
+                "title": "Stock Input"
+            },
+            "registerDate": "Register Date",
+            "quantity": "Quantity",
+            "stockState": "Stock State",
+            "stockInput": "Stock Input",
+            "product": "Product",
+            "user": "User",
+            "historic": "Historic",
+            "goBack": "Back"
+        }
+    }
+}

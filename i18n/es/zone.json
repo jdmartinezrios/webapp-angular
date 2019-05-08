@@ -1,0 +1,29 @@
+
+{
+    "delcampoApp": {
+        "zone" : {
+            "home": {
+                "title": "Barrios",
+                "createLabel": "Crear nuevo Barrio",
+                "createOrEditLabel": "Crear o editar Barrio",
+                "search": "Buscar Barrio"
+            },
+            "created": "Un nuevo Barrio ha sido creado con el identificador {{ param }}",
+            "updated": "Un Barrio ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Barrio ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el Barrio {{ id }}?"
+            },
+            "detail": {
+                "title": "Barrio"
+            },
+            "zoneName": "Barrio",
+            "zoneEnabled": "Activo / Inactivo",
+            "city": "Ciudad",
+            "help": {
+                "zoneName": "Nombre del barrio, zona o municipio",
+                "zoneEnabled": "Barrio: Activo / Inactivo"
+            }
+        }
+    }
+}

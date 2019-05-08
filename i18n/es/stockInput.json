@@ -1,0 +1,30 @@
+
+{
+    "delcampoApp": {
+        "stockInput" : {
+            "home": {
+                "title": "Entradas de Almacén",
+                "createLabel": "Crear nueva Entrada de almacén",
+                "createOrEditLabel": "Crear o editar Entrada de almacén",
+                "search": "Buscar Entrada de almacén"
+            },
+            "created": "Una nueva Entrada de almacén ha sido creada con el identificador {{ param }}",
+            "updated": "Una Entrada de almacén ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Entrada de almacén ha sido eliminada con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar la Entrada de almacén {{ id }}?"
+            },
+            "detail": {
+                "title": "Entrada de almacén"
+            },
+            "registerDate": "Fecha de Registro",
+            "quantity": "Cantidad",
+            "stockState": "Estado",
+            "stockInput": "Entrada de almacén",
+            "product": "Producto",
+            "user": "Proveedor",
+            "historic": "Historial",
+            "goBack": "Volver"
+        }
+    }
+}

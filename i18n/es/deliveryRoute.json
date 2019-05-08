@@ -1,0 +1,27 @@
+
+{
+    "delcampoApp": {
+        "deliveryRoute" : {
+            "home": {
+                "title": "Delivery Routes",
+                "createLabel": "Crear nuevo Delivery Route",
+                "createOrEditLabel": "Crear o editar Delivery Route",
+                "search": "Search for Delivery Route"
+            },
+            "created": "Un nuevo Delivery Route ha sido creado con el identificador {{ param }}",
+            "updated": "Un Delivery Route ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Delivery Route ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Delivery Route {{ id }}?"
+            },
+            "detail": {
+                "title": "Delivery Route"
+            },
+            "createDate": "Fecha de creación",
+            "scheduleDate": "Fecha de entrega",
+            "vehicle": "Vehiculo",
+            "driver": "Conductor",
+            "shipment": "Compra"
+        }
+    }
+}

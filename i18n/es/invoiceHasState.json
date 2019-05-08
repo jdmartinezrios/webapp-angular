@@ -1,0 +1,27 @@
+
+{
+    "delcampoApp": {
+        "invoiceHasState" : {
+            "home": {
+                "title": "Invoice Has States",
+                "createLabel": "Crear nuevo Invoice Has State",
+                "createOrEditLabel": "Crear o editar Invoice Has State",
+                "search": "Search for Invoice Has State"
+            },
+            "created": "Un nuevo Invoice Has State ha sido creado con el identificador {{ param }}",
+            "updated": "Un Invoice Has State ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Invoice Has State ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Invoice Has State {{ id }}?"
+            },
+            "detail": {
+                "title": "Invoice Has State"
+            },
+            "registerDate": "Register Date",
+            "observations": "Observations",
+            "invoiceState": "Invoice State",
+            "user": "User",
+            "invoice": "Invoice"
+        }
+    }
+}

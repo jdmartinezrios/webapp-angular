@@ -1,0 +1,26 @@
+
+{
+    "delcampoApp": {
+        "discountList" : {
+            "home": {
+                "title": "Lista Descuentos",
+                "createLabel": "Crear nueva Lista Descuento",
+                "createOrEditLabel": "Crear o editar Lista Descuento",
+                "search": "Buscar Lista Descuento"
+            },
+            "created": "Una nueva Lista Descuento ha sido creada con el identificador {{ param }}",
+            "updated": "Una Lista Descuento ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Lista Descuento ha sido eliminada con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar la Lista Descuento {{ id }}?"
+            },
+            "detail": {
+                "title": "Lista Descuento"
+            },
+            "startDate": "Fecha Inicio",
+            "endDate": "Fecha Fin",
+            "discount": "Descuento",
+            "product": "Producto"
+        }
+    }
+}

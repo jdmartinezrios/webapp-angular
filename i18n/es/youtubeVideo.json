@@ -1,0 +1,30 @@
+
+{
+    "delcampoApp": {
+        "youtubeVideo" : {
+            "home": {
+                "title": "Videos Youtube",
+                "createLabel": "Crear nuevo Video Youtube",
+                "createOrEditLabel": "Crear o editar Video Youtube",
+                "search": "Buscar Video Youtube"
+            },
+            "created": "Un nuevo Video Youtube ha sido creado con el identificador {{ param }}",
+            "updated": "Un Video Youtube ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Video Youtube ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el Video Youtube {{ id }}?"
+            },
+            "detail": {
+                "title": "Video Youtube"
+            },
+            "youtubeName": "Nombre",
+            "youtubeUrl": "URL Youtube",
+            "product": "Producto",
+            "recipe": "Receta",
+            "help": {
+                "youtubeName": "Nombre para identificar el video",
+                "youtubeUrl": "URL del video de youtube"
+            }
+        }
+    }
+}

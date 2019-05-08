@@ -1,0 +1,9 @@
+{
+    "delcampoApp": {
+        "StockState" : {
+            "null": "",
+            "IN_TRANSIT": "In transit",
+            "IN_SITE": "In site"
+        }
+    }
+}

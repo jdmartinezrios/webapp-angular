@@ -1,0 +1,36 @@
+
+<div *ngIf="productType">
+    <h2><span jhiTranslate="delcampoApp.productType.detail.title">Product Type</span> {{productType.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.productType.productTypeName" [ngbTooltip]="'delcampoApp.productType.help.productTypeName' | translate">Product Type Name</span></dt>
+        <dd>
+            <span>{{productType.productTypeName}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.productType.productTypeEnabled" [ngbTooltip]="'delcampoApp.productType.help.productTypeEnabled' | translate">Product Type Enabled</span></dt>
+        <dd>
+            <span>{{productType.productTypeEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.productType.category">Category</span></dt>
+        <dd>
+            <div *ngIf="productType.categoryId">
+                <a [routerLink]="['/product-category', productType.categoryId]">{{productType.categoryProductCategoryName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'product-type/'+ productType.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,46 @@
+
+<div *ngIf="deliveryRoute">
+    <h2><span jhiTranslate="delcampoApp.deliveryRoute.detail.title">Delivery Route</span> {{deliveryRoute.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.deliveryRoute.createDate">Create Date</span></dt>
+        <dd>
+            <span>{{deliveryRoute.createDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.deliveryRoute.scheduleDate">Schedule Date</span></dt>
+        <dd>
+            <span>{{deliveryRoute.scheduleDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.deliveryRoute.vehicle">Vehicle</span></dt>
+        <dd>
+            <div *ngIf="deliveryRoute.vehicleId">
+                <a [routerLink]="['/vehicle', deliveryRoute.vehicleId]">{{deliveryRoute.vehicleReferenceVehicle}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.deliveryRoute.driver">Driver</span></dt>
+        <dd>
+            {{deliveryRoute.driverLogin}}
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.deliveryRoute.shipment">Shipment</span></dt>
+        <dd>
+            <span *ngFor="let shipment of deliveryRoute.shipments; let last = last">
+                <a [routerLink]="['/invoice', shipment?.id ]">{{shipment.invoiceNumber}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'delivery-route/'+ deliveryRoute.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

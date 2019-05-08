@@ -1,0 +1,108 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="deliveryRoutes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th ><span jhiTranslate="delcampoApp.deliveryRoute.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="delcampoApp.deliveryRoute.scheduleDate">Schedule Date</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="delcampoApp.deliveryRoute.vehicle">Vehicle</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="delcampoApp.deliveryRoute.driver">Driver</span> <span class="fa fa-sort"></span></th>
+            <th><span>Gestionar</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let deliveryRoute of deliveryRoutes ;trackBy: trackId">
+                <td>{{deliveryRoute.createDate | date:'medium'}}</td>
+                <td>{{deliveryRoute.scheduleDate | date:'mediumDate'}}</td>
+                <td>
+                    <div *ngIf="deliveryRoute.vehicleId">
+                        <a [routerLink]="['../vehicle', deliveryRoute.vehicleId  ]" >{{deliveryRoute.vehicleReferenceVehicle}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{deliveryRoute.driverLogin}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <!-- button type="submit"
+                                [routerLink]="['../delivery-route', deliveryRoute.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button -->
+                        <button type="submit"
+                                class="btn btn-primary btn-sm"
+                                data-toggle="modal" 
+                                data-target=".bd-example-modal-lg"
+                                (click) = "setDeliveredRouteToEdit(deliveryRoute)">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <!-- button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'delivery-route/'+ deliveryRoute.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button -->
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal gestion de rutas -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Gestionar Ruta</h5>
+    </div>
+    <div class="modal-body">
+        <jhi-alert></jhi-alert>
+        
+        <div *ngIf = "deliveryRouteToEdit">
+            <!-- Cada una de los pedidos asignados en la ruta -->
+            <div class="card" *ngFor = "let shipment of deliveryRouteToEdit.shipments; let i = index">
+              <div class="card-body">
+                <h5 class="card-title">{{ i + 1}} </h5>
+                <h5 *ngIf = "shipment.invoiceStates" [ngClass] = "{'text-warning': shipment.invoiceStates[shipment.invoiceStates.length - 1].invoiceState == 'IN_TRANSIT', 'text-success': shipment.invoiceStates[shipment.invoiceStates.length - 1].invoiceState == 'DELIVERED'}">Estado: {{ shipment.invoiceStates[shipment.invoiceStates.length - 1].invoiceState}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{shipment.scheduleDate}}</h6>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.invoiceHasState.invoiceState" for="field_invoiceState">Invoice State</label>
+                    <select class="form-control" name="invoiceState"  id="field_invoiceState" [(ngModel)] = "invoiceHasStates[i].invoiceState">
+                        <!--option value="0">{{'delcampoApp.InvoiceState.NO_PAID' | translate}}</option>
+                        <option value="1">{{'delcampoApp.InvoiceState.PAID' | translate}}</option>
+                        <option value="2">{{'delcampoApp.InvoiceState.SCHEDULED' | translate}}</option>
+                        <option value="3">{{'delcampoApp.InvoiceState.PACKED' | translate}}</option>
+                        <option value="4">{{'delcampoApp.InvoiceState.IN_TRANSIT' | translate}}</option--->
+                        <option value="5">{{'delcampoApp.InvoiceState.DELIVERED' | translate}}</option>
+                        <option value="6">{{'delcampoApp.InvoiceState.REPROGRAMED' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoiceHasState.observations" for="field_observations">Observations</label>
+            <input type="text" class="form-control" name="observations" id="field_observations"
+                [(ngModel)]="invoiceHasStates[i].observations" maxlength="500"/>
+        </div>
+        <div class="form-group">
+            <button type="button" [disabled]="!invoiceHasStates[i].observations || !invoiceHasStates[i].invoiceState || shipment.invoiceStates[shipment.invoiceStates.length - 1].invoiceState == 'REPROGRAMED'" class="btn btn-primary" (click) = "updateShipmentState(i)">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>

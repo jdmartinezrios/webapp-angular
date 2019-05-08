@@ -1,0 +1,28 @@
+
+{
+    "delcampoApp": {
+        "productCategory" : {
+            "home": {
+                "title": "Categorías",
+                "createLabel": "Crear nueva Categoría",
+                "createOrEditLabel": "Crear o editar Categoría",
+                "search": "Buscar Categorías"
+            },
+            "created": "Una nueva Categoría ha sido creada con el identificador {{ param }}",
+            "updated": "Una Categoría ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Categoría ha sido eliminada con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar la Categoría {{ id }}?"
+            },
+            "detail": {
+                "title": "Categoría"
+            },
+            "productCategoryName": "Nombre Categoría",
+            "productCategoryEnabled": "Estado Categoría",
+            "help": {
+                "productCategoryName": "Nombre de la categoría para clasificar los productos",
+                "productCategoryEnabled": "Estado: Activada / Desactivada"
+            }
+        }
+    }
+}

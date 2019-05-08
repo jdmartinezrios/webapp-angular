@@ -1,0 +1,26 @@
+
+{
+    "delcampoApp": {
+        "stockInputHasState" : {
+            "home": {
+                "title": "Estados Entradas Almacén",
+                "createLabel": "Crear nuevo Estado entrada de almacén",
+                "createOrEditLabel": "Crear o editar Estado entrada de almacén",
+                "search": "Buscar Estado entrada de almacén"
+            },
+            "created": "Un nuevo Estado entrada de almacén ha sido creado con el identificador {{ param }}",
+            "updated": "Un Estado entrada de almacén ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Estado entrada de almacén ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el Estado entrada de almacén {{ id }}?"
+            },
+            "detail": {
+                "title": "Estado entrada de almacén"
+            },
+            "registerDate": "Fecha de Registro",
+            "observations": "Observaciones",
+            "stockState": "Estado",
+            "stockInput": "Entrada Almacén"
+        }
+    }
+}

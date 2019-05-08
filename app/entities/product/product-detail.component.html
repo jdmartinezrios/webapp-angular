@@ -1,0 +1,68 @@
+
+<div *ngIf="product">
+    <h2><span jhiTranslate="delcampoApp.product.detail.title">Product</span> {{product.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.product.name" [ngbTooltip]="'delcampoApp.product.help.name' | translate">Name</span></dt>
+        <dd>
+            <span>{{product.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.description" [ngbTooltip]="'delcampoApp.product.help.description' | translate">Description</span></dt>
+        <dd>
+            <span>{{product.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.measurementUnit" [ngbTooltip]="'delcampoApp.product.help.measurementUnit' | translate">Measurement Unit</span></dt>
+        <dd>
+            <span jhiTranslate="{{'delcampoApp.MeasurementUnit.' + product.measurementUnit}}">{{product.measurementUnit}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.stock" [ngbTooltip]="'delcampoApp.product.help.stock' | translate">Stock</span></dt>
+        <dd>
+            <span>{{product.stock}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.base">Base</span></dt>
+        <dd>
+            <div *ngIf="product.baseId">
+                <a [routerLink]="['/product', product.baseId]">{{product.baseName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.type">Type</span></dt>
+        <dd>
+            <div *ngIf="product.typeId">
+                <a [routerLink]="['/product-type', product.typeId]">{{product.typeProductTypeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.category">Category</span></dt>
+        <dd>
+            <div *ngIf="product.categoryId">
+                <a [routerLink]="['/product-category', product.categoryId]">{{product.categoryProductCategoryName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.manufacturedType">Manufactured Type</span></dt>
+        <dd>
+            <div *ngIf="product.manufacturedTypeId">
+                <a [routerLink]="['/manufactured-product-type', product.manufacturedTypeId]">{{product.manufacturedTypeManufacturedProductTypeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.product.youtube">Youtube</span></dt>
+        <dd>
+            <span *ngFor="let youtube of product.youtubes; let last = last">
+                <a [routerLink]="['/youtube-video', youtube?.id ]">{{youtube.youtubeName}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'product/'+ product.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

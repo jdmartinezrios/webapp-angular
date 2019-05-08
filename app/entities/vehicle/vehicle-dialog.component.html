@@ -1,0 +1,58 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myVehicleLabel" jhiTranslate="delcampoApp.vehicle.home.createOrEditLabel">Create or edit a Vehicle</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!vehicle.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="vehicle.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.vehicle.referenceVehicle" for="field_referenceVehicle">Reference Vehicle</label>
+            <input type="text" class="form-control" name="referenceVehicle" id="field_referenceVehicle"
+                [(ngModel)]="vehicle.referenceVehicle" maxlength="100"/>
+            <div [hidden]="!(editForm.controls.referenceVehicle?.dirty && editForm.controls.referenceVehicle?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.referenceVehicle?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 100 }">
+                   This field cannot be longer than 100 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.vehicle.brand" for="field_brand">Brand</label>
+            <input type="text" class="form-control" name="brand" id="field_brand"
+                [(ngModel)]="vehicle.brand" maxlength="50"/>
+            <div [hidden]="!(editForm.controls.brand?.dirty && editForm.controls.brand?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.brand?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 50 }">
+                   This field cannot be longer than 50 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.vehicle.licensePlate" for="field_licensePlate">License Plate</label>
+            <input type="text" class="form-control" name="licensePlate" id="field_licensePlate"
+                [(ngModel)]="vehicle.licensePlate" maxlength="6"/>
+            <div [hidden]="!(editForm.controls.licensePlate?.dirty && editForm.controls.licensePlate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.licensePlate?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 6 }">
+                   This field cannot be longer than 6 characters.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,27 @@
+
+{
+    "delcampoApp": {
+        "city" : {
+            "home": {
+                "title": "Ciudades",
+                "createLabel": "Crear nueva Ciudad",
+                "createOrEditLabel": "Crear o editar Ciudad",
+                "search": "Buscar Ciudad"
+            },
+            "created": "Una nueva Ciudad ha sido creada con el identificador {{ param }}",
+            "updated": "Una Ciudad ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Ciudad ha sido eliminada con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar la Ciudad {{ id }}?"
+            },
+            "detail": {
+                "title": "Ciudad"
+            },
+            "cityName": "Nombre",
+            "stateProvince": "Departamento (Estado)",
+            "help": {
+                "cityName": "Nombre de la cidudad"
+            }
+        }
+    }
+}

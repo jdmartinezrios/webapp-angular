@@ -1,0 +1,1256 @@
+
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+    <div class="modal-header">
+        <h4 class="modal-title text-success font-weight-bold" id="myProductLabel" jhiTranslate="delcampoApp.product.home.createOrEditLabel">Create or edit a Product</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <h5 class="text-success font-weight-bold" jhiTranslate="delcampoApp.product.home.productDetail">Detalle del Producto</h5>
+        <div *ngIf="!product.id" class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="isManufactured" id="defaultCheck1"
+                       [(ngModel)]="isManufactured">
+                <label class="form-check-label" for="defaultCheck1" jhiTranslate="delcampoApp.product.isManufactured">
+                    Manufactured
+                </label>
+            </div>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-6" *ngIf="isManufactured">
+            <label class="form-control-label" jhiTranslate="delcampoApp.product.manufacturedType"
+                   for="field_manufacturedType">Manufactured Type</label>
+            <select class="form-control" id="field_manufacturedType" name="manufacturedType"
+                    [(ngModel)]="product.manufacturedTypeId">
+                <!--<option [ngValue]="null"></option>-->
+                <option [ngValue]="manufacturedProductTypeOption.id"
+                        *ngFor="let manufacturedProductTypeOption of manufacturedproducttypes; trackBy: trackManufacturedProductTypeById">
+                    {{manufacturedProductTypeOption.manufacturedProductTypeName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6" *ngIf="isManufactured">
+            <label class="form-control-label" jhiTranslate="delcampoApp.product.base" for="field_base">Base</label>
+            <select class="form-control" id="field_base" name="base" [(ngModel)]="product.baseId">
+                <!--<option [ngValue]="null"></option>-->
+                <option [ngValue]="productOption.id" *ngFor="let productOption of products; trackBy: trackProductById">
+                    {{productOption.name}}
+                </option>
+            </select>
+        </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="form-control-label" jhiTranslate="delcampoApp.product.category" for="field_category">Category</label>
+                <select class="form-control" id="field_category" name="category" [(ngModel)]="product.categoryId" required
+                (change) = "findTypeByCategory(product.categoryId)">
+                    <!--<option [ngValue]="null"></option>-->
+                    <option [ngValue]="productCategoryOption.id"
+                            *ngFor="let productCategoryOption of productcategories; trackBy: trackProductCategoryById">
+                        {{productCategoryOption.productCategoryName}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-control-label" jhiTranslate="delcampoApp.product.type" for="field_type">Type</label>
+                <select class="form-control" id="field_type" name="type" [(ngModel)]="product.typeId" required>
+                    <!--<option [ngValue]="null"></option>-->
+                    <option [ngValue]="productTypeOption.id"
+                            *ngFor="let productTypeOption of producttypes; trackBy: trackProductTypeById">
+                        {{productTypeOption.productTypeName}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-control-label" jhiTranslate="delcampoApp.product.name" for="field_name"
+                       [ngbTooltip]="'delcampoApp.product.help.name' | translate">Name</label>
+                <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="product.name" required
+                       maxlength="40"/>
+                <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.name?.errors?.required"
+                           jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.name?.errors?.maxlength"
+                           jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                        This field cannot be longer than 40 characters.
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group" class="col-md-12">
+                <!-- <label class="form-control-label" jhiTranslate="delcampoApp.product.description"
+                       [ngbTooltip]="'delcampoApp.product.help.description' | translate">Description</label> -->
+                <div class="form-group m-0">                
+                   <button class="btn btn-success"jhiTranslate="delcampoApp.product.description" (click) = "showEditor()" [ngbTooltip]="'delcampoApp.product.help.description' | translate">
+                     VALORES NUTRICIONALES
+                   </button>
+               </div>
+                <!-- <textarea class="form-control" name="description" id="field_description" [(ngModel)]="product.description"></textarea> -->
+                <!-- <textarea class="form-control" name="description" id="field_description" [(ngModel)]="product.description"></textarea> -->
+                <!-- *ngIf="!showPEditor" -->
+                <div [hidden]="showPEditor" class="mt-3 animated fadeIn">
+                  <form [formGroup]="descriptionForm" #desForm="ngForm">
+                      <p-editor formControlName="description" [style]="{'height':'320px','font-size' : '1rem'}">
+                          <p-header>
+                            <span class="ql-format-group">
+                              <span title="Bold" class="ql-format-button ql-bold"></span>
+                              <span class="ql-format-separator"></span>
+                              <span title="Italic" class="ql-format-button ql-italic"></span>
+                              <span class="ql-format-separator"></span>
+                              <span title="Underline" class="ql-format-button ql-underline"></span>
+                              <span class="ql-format-separator"></span>
+                              <span title="Strikethrough" class="ql-format-button ql-strike"></span>
+                            </span>
+                          </p-header>
+                      </p-editor>
+                  </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5 class="text-success font-weight-bold" jhiTranslate="delcampoApp.product.home.productValues">Valores del producto</h5>
+        <div class="form-row">
+            <div class="form-group col-md-6" [ngClass]="{'col-md-6' : product.id , 'col-md-12' : !product.id}" >
+                <label class="form-control-label" jhiTranslate="delcampoApp.product.measurementUnit"
+                       for="field_measurementUnit"
+                       [ngbTooltip]="'delcampoApp.product.help.measurementUnit' | translate">Measurement Unit</label>
+                <select class="form-control" name="measurementUnit" [(ngModel)]="product.measurementUnit"
+                        id="field_measurementUnit">
+                    <option value="LB">{{'delcampoApp.MeasurementUnit.LB' | translate}}</option>
+                    <option value="KG">{{'delcampoApp.MeasurementUnit.KG' | translate}}</option>
+                    <option value="UNIT">{{'delcampoApp.MeasurementUnit.UNIT' | translate}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6" *ngIf="product.id">
+                <label class="form-control-label" jhiTranslate="delcampoApp.product.stock" for="field_stock"
+                       [ngbTooltip]="'delcampoApp.product.help.stock' | translate">Stock</label>
+                <input type="number" class="form-control" name="stock" id="field_stock" [(ngModel)]="product.stock"
+                       min="0" readonly/>
+                <div [hidden]="!(editForm.controls.stock?.dirty && editForm.controls.stock?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.stock?.errors?.min"
+                           jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                        This field should be at least 0.
+                    </small>
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.stock?.errors?.number"
+                           jhiTranslate="entity.validation.number">
+                        This field should be a number.
+                    </small>
+                </div>
+            </div>
+        </div>
+        <!--<div class="form-row">
+            <div class="form-group" *ngIf="!product.id" [ngClass]="{'col-md-6':!product.id, 'col-md-12':product.id}">
+                <label class="form-control-label" jhiTranslate="delcampoApp.stockInput.user"
+                       for="field_user">User</label>
+                <select class="form-control" id="field_user" name="user" [(ngModel)]="stockInput.userId">
+                    <option [ngValue]="null"></option>
+                    <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">
+                        {{userOption.login}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group" [ngClass]="{'col-md-6':!product.id, 'col-md-12':product.id}">
+                <label class="form-control-label" jhiTranslate="delcampoApp.stockInputHasState.observations"
+                       for="field_observations">Observations</label>
+                <input type="text" class="form-control" name="observations" id="field_observations"
+                       [(ngModel)]="stockInputHasState.observations" maxlength="500"/>
+                <div [hidden]="!(editForm.controls.observations?.dirty && editForm.controls.observations?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.observations?.errors?.maxlength"
+                           jhiTranslate="entity.validation.maxlength" translateValues="{ max: 500 }">
+                        This field cannot be longer than 500 characters.
+                    </small>
+                </div>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label jhiTranslate="delcampoApp.product.youtube" for="field_youtube">Youtube</label>
+                <div
+                        *ngFor="let youtubeVideoOption of product.youtubes; let i = index">
+                    {{youtubeVideoOption.youtubeName}} <p style="display: inline-block" (click) = "removeVideo(i)">
+                       <span >x</span>
+                    </p></div>
+                </option>
+        </div>
+        <!-- Gestion de los videos de Youtube -->
+        <div class="form-group" >
+          <button type="button" class="btn btn-success" name="button" (click) = "addVideosOptions = 'add'">Agregar video</button>
+        </div>
+        <!-- Formulario para agregar video -->
+        <div class="" *ngIf="addVideosOptions == 'add'" class="animated fadeIn">
+          <form name="editFormYoutubeVideo" role="form" novalidate (ngSubmit)="addYoutubeVideos()" #editFormYoutubeVideo="ngForm">
+
+              <div class="modal-header p-0">
+                  <h5 class="modal-title text-success font-weig-bold" id="myYoutubeVideoLabel" jhiTranslate="delcampoApp.youtubeVideo.home.createOrEditLabel">Create or edit a Youtube Video</h5>
+                  <button type="button" class="close" aria-hidden="true"
+                          (click)="addVideosOptions = ''">&times;</button>
+              </div>
+              <div class="modal-body p-0">
+                  <jhi-alert-error></jhi-alert-error>
+                  <div class="form-group" [hidden]="!youtubeVideo.id">
+                      <label for="id" jhiTranslate="global.field.id">ID</label>
+                      <input type="text" class="form-control" id="id" name="id"
+                             [(ngModel)]="youtubeVideo.id" readonly />
+                  </div>
+                  <div class="form-group">
+                      <label class="form-control-label" jhiTranslate="delcampoApp.youtubeVideo.youtubeName" for="field_youtubeName" [ngbTooltip]="'delcampoApp.youtubeVideo.help.youtubeName' | translate">Youtube Name</label>
+                      <input type="text" class="form-control" name="youtubeName" id="field_youtubeName"
+                          [(ngModel)]="youtubeVideo.youtubeName" required/>
+                      <div [hidden]="!(editFormYoutubeVideo.controls.youtubeName?.dirty && editFormYoutubeVideo.controls.youtubeName?.invalid)">
+                          <small class="form-text text-danger"
+                             [hidden]="!editFormYoutubeVideo.controls.youtubeName?.errors?.required" jhiTranslate="entity.validation.required">
+                             This field is required.
+                          </small>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-control-label" jhiTranslate="delcampoApp.youtubeVideo.youtubeUrl" for="field_youtubeUrl" [ngbTooltip]="'delcampoApp.youtubeVideo.help.youtubeUrl' | translate">Youtube Url</label>
+                      <input type="text" class="form-control" name="youtubeUrl" id="field_youtubeUrl"
+                          [(ngModel)]="youtubeVideo.youtubeUrl" required/>
+                      <div [hidden]="!(editFormYoutubeVideo.controls.youtubeUrl?.dirty && editFormYoutubeVideo.controls.youtubeUrl?.invalid)">
+                          <small class="form-text text-danger"
+                             [hidden]="!editFormYoutubeVideo.controls.youtubeUrl?.errors?.required" jhiTranslate="entity.validation.required">
+                             This field is required.
+                          </small>
+                      </div>
+                  </div>
+
+              </div>
+              <div class="modal-footer p-0">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="addVideosOptions = undefined">
+                      <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                  </button>
+                  <button type="submit" [disabled]="editFormYoutubeVideo.form.invalid || isSaving" class="btn btn-success">
+                      <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                  </button>
+              </div>
+          </form>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-success" name="button" (click) = "addVideosOptions = 'search'">Seleccionar video</button>
+        </div>
+        <!-- Formulario para buscar producto -->
+        <div class="" *ngIf="addVideosOptions == 'search'" class="animated fadeIn">
+          <form>
+            <p-autoComplete  [suggestions]="youtubevideosFiltered" name="text" placeholder="Video" (completeMethod)="searchFichas($event)" field="youtubeName" emptyMessage="Video no encontrado" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+  				    forceSelection="true" (onSelect) = "addYoutubeVideos($event)">
+  					<ng-template let-video pTemplate="item">
+  						<div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+  							{{video.youtubeName}}
+  						</div>
+  					</ng-template>
+  				</p-autoComplete>
+          </form>
+        </div>
+        <hr>
+        <!-- Crear lista de precios al crear producto-->
+        <div *ngIf="!product.id">
+            <h5 class="text-success font-weight-bold" jhiTranslate="delcampoApp.product.home.productPrice">Precio del
+                producto</h5>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.startDate"
+                           for="field_startDateCreate">Start Date</label>
+                    <div class="d-flex">
+                        <!--input id="field_startDateCreate" type="datetime-local" class="form-control" name="startDate"
+                               [(ngModel)]="priceList.startDate" required/ -->
+                               <p-calendar [(ngModel)]="priceList.startDate" [showTime]="true" name = "startDate" [minDate] = "minDate" required></p-calendar>
+                    </div>
+                    <div [hidden]="!(editForm.controls.startDate?.dirty && editForm.controls.startDate?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.startDate?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.startDate?.errors?.ZonedDateTimelocal"
+                               jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.endDate" for="field_endDateCreate">End
+                        Date</label>
+                    <div class="d-flex">
+                        <!-- input id="field_endDateCreate" type="datetime-local" class="form-control" name="endDate"
+                               [(ngModel)]="priceList.endDate"/ -->
+                      <p-calendar [(ngModel)]="priceList.endDate" [showTime]="true" name = "endDate" [minDate] = "minDate" required></p-calendar>
+                    </div>
+                </div>
+            <!--</div>
+            <div class="form-row">-->
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.price"
+                           for="field_priceCreate">Price</label>
+                    <input type="number" class="form-control" name="price" id="field_priceCreate"
+                           [(ngModel)]="priceList.price" required min="0"/>
+                    <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.price?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.price?.errors?.min"
+                               jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.price?.errors?.number"
+                               jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.currency"
+                           for="field_currencyCreate">Currency</label>
+                    <select class="form-control" name="currency" [(ngModel)]="priceList.currency" id="field_currencyCreate"
+                            required>
+                        <option value="COP">{{'delcampoApp.Currency.COP' | translate}}</option>
+                        <option value="USD">{{'delcampoApp.Currency.USD' | translate}}</option>
+                        <option value="EUR">{{'delcampoApp.Currency.EUR' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.currency?.dirty && editForm.controls.currency?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.currency?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- Fin Crear lista de precios al crear producto-->
+        <button *ngIf="!product.id" (click)="addDiscountListAtCreate = !addDiscountListAtCreate" jhiTranslate="delcampoApp.product.discountListQuestion" type="button" class="btn btn-success mb-2">Add discount list</button>
+        <!-- Agregar lista de descuentos al crear un producto -->
+        <div *ngIf="addDiscountListAtCreate">
+            <h5 class="text-success font-weight-bold pt-3" jhiTranslate="delcampoApp.product.home.productDiscount">
+                Descuento del producto</h5>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.discountList.startDate"
+                           for="field_startDateEdit">Start Date</label>                    
+                        <!--input id="field_startDateEdit" type="datetime-local" class="form-control" name="startDate"
+                               [(ngModel)]="discountList.startDate" required/-->
+                      <p-calendar [style]="{'width' : '99.2%'}" 
+                      [inputStyle]="{'width' : '99.2%'}" [(ngModel)]="discountList.startDate"
+                      [showTime]="true" name = "startDate" [minDate] = "minDate" required></p-calendar>                    
+                    <div [hidden]="!(editForm.controls.startDate?.dirty && editForm.controls.startDate?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.startDate?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.startDate?.errors?.ZonedDateTimelocal"
+                               jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.discountList.endDate"
+                           for="field_endDateEdit">End Date</label>                    
+                        <!--input id="field_endDateEdit" type="datetime-local" class="form-control" name="endDate"
+                               [(ngModel)]="discountList.endDate"/ -->
+                               <p-calendar [style]="{'width' : '99.2%'}" 
+                               [inputStyle]="{'width' : '99.2%'}" [(ngModel)]="discountList.endDate"
+                               [showTime]="true" name = "endDate" [minDate] = "minDate" required></p-calendar>                    
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.discountList.discount"
+                           for="field_discountEdit">Discount</label>
+                    <input type="number" class="form-control" name="discount" id="field_discountEdit"
+                           [(ngModel)]="discountList.discount" required min="0" max="99"/>
+                    <div [hidden]="!(editForm.controls.discount?.dirty && editForm.controls.discount?.invalid)">
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.discount?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.discount?.errors?.min"
+                               jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.discount?.errors?.max"
+                               jhiTranslate="entity.validation.max" translateValues="{ max: 99 }">
+                            This field cannot be more than 99.
+                        </small>
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.discount?.errors?.number"
+                               jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="product.id">
+            <div class="row">
+                <div class="col-md-3 pt-3 pb-3">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+                           role="tab" aria-controls="home" (click)="showTabs = 'agregar'"
+                           jhiTranslate="delcampoApp.product.addStockInput">Add Stock</a>
+                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                           role="tab" aria-controls="profile" *ngIf="stockInputs.length > 0"
+                           (click)="showTabs = 'lista'" jhiTranslate="delcampoApp.product.viewStockInputs">Product
+                            List</a>
+                        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                           role="tab" aria-controls="messages" (click)="showTabs = 'agregarPrecio'"
+                           jhiTranslate="delcampoApp.product.addListPrice">Add Price List</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                           role="tab" aria-controls="settings" *ngIf="pricesList.length > 0"
+                           (click)="showTabs = 'editarPrecio'" jhiTranslate="delcampoApp.product.editListPrices">Edit
+                            Price LIst</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                           role="tab" aria-controls="settings" (click)="showTabs = 'agregarDescuento'"
+                           jhiTranslate="delcampoApp.product.discountListQuestion">Add Discount LIst</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                           role="tab" aria-controls="settings" *ngIf="discountsList.length > 0"
+                           (click)="showTabs = 'editarDescuento'"
+                           jhiTranslate="delcampoApp.product.discountListEditQuestion">Add Discount LIst</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                           role="tab" aria-controls="settings" (click)="showTabs = 'agregarImagen'"
+                           jhiTranslate="delcampoApp.product.imageQuestion">Subir Imagen</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                           role="tab" aria-controls="settings" (click)="showTabs = 'editarImagen'"
+                           jhiTranslate="delcampoApp.product.imageEditQuestion">Editar Imagen</a>
+                    </div>
+                </div>
+                <div class="col-md-9 pt-3">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="list-home" role="tabpanel">
+                            <div *ngIf="showTabs == 'agregar'" class="animated fadeIn">
+                                <form name="editFormStockInput" role="form" novalidate (ngSubmit)="saveStockInput()"
+                                      #editFormStockInput="ngForm" class="pb-2">
+                                    <jhi-alert-error></jhi-alert-error>
+                                    <div class="form-group" [hidden]="!stockInput.id">
+                                        <label for="id" jhiTranslate="global.field.id">ID</label>
+                                        <input type="text" class="form-control" id="id" name="id"
+                                               [(ngModel)]="stockInput.id" readonly/>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control-label"
+                                                   jhiTranslate="delcampoApp.stockInput.quantity" for="field_quantity">Quantity</label>
+                                            <input type="number" class="form-control" name="quantity"
+                                                   id="field_quantity" [(ngModel)]="stockInput.quantity" required
+                                                   min="0"/>
+                                            <div
+                                                [hidden]="!(editFormStockInput.controls.quantity?.dirty && editFormStockInput.controls.quantity?.invalid)">
+                                                <small class="form-text text-danger"
+                                                       [hidden]="!editFormStockInput.controls.quantity?.errors?.required"
+                                                       jhiTranslate="entity.validation.required">
+                                                    This field is required.
+                                                </small>
+                                                <small class="form-text text-danger"
+                                                       [hidden]="!editFormStockInput.controls.quantity?.errors?.min"
+                                                       jhiTranslate="entity.validation.min"
+                                                       translateValues="{ min: 0 }">
+                                                    This field should be at least 0.
+                                                </small>
+                                                <small class="form-text text-danger"
+                                                       [hidden]="!editFormStockInput.controls.quantity?.errors?.number"
+                                                       jhiTranslate="entity.validation.number">
+                                                    This field should be a number.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control-label"
+                                                   jhiTranslate="delcampoApp.stockInput.stockState"
+                                                   for="field_stockState">Stock State</label>
+                                            <select class="form-control" name="stockState"
+                                                    [(ngModel)]="stockInput.stockState" id="field_stockState">
+                                                <option value="IN_TRANSIT">{{'delcampoApp.StockState.IN_TRANSIT' |
+                                                    translate}}
+                                                </option>
+                                                <option value="IN_SITE">{{'delcampoApp.StockState.IN_SITE' |
+                                                    translate}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" jhiTranslate="delcampoApp.stockInput.user"
+                                               for="field_user">User</label>
+                                        <select class="form-control" id="field_user" name="user"
+                                                [(ngModel)]="stockInput.userId">
+                                            <option [ngValue]="null"></option>
+                                            <option [ngValue]="userOption.id"
+                                                    *ngFor="let userOption of users; trackBy: trackUserById">
+                                                {{userOption.login}}
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label"
+                                               jhiTranslate="delcampoApp.stockInputHasState.observations"
+                                               for="field_observations">Observations</label>
+                                        <input type="text" class="form-control" name="observations"
+                                               id="field_observations"
+                                               [(ngModel)]="stockInputHasState.observations" maxlength="500"/>
+                                        <div
+                                            [hidden]="!(editFormStockInput.controls.observations?.dirty && editForm.controls.observations?.invalid)">
+                                            <small class="form-text text-danger"
+                                                   [hidden]="!editFormStockInput.controls.observations?.errors?.maxlength"
+                                                   jhiTranslate="entity.validation.maxlength"
+                                                   translateValues="{ max: 500 }">
+                                                This field cannot be longer than 500 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                            (click)="showTabs = ''">
+                                        <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                                    </button>
+                                    <button type="submit" [disabled]="editFormStockInput.form.invalid || isSaving"
+                                            class="btn btn-success">
+                                        <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div *ngIf="showTabs == 'lista'" class="animated fadeIn">
+                            <table class="table table-striped" *ngIf="!stockInputToEditState && !stockInputHistorial">
+                                <thead>
+                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                                    <th jhiSortBy="registerDate"><span
+                                        jhiTranslate="delcampoApp.stockInput.registerDate">Register Date</span> <span
+                                        class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="quantity"><span jhiTranslate="delcampoApp.stockInput.quantity">Quantity</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="stockState"><span jhiTranslate="delcampoApp.stockInput.stockState">Stock State</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="productName"><span jhiTranslate="delcampoApp.stockInput.product">Product</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="userLogin"><span
+                                        jhiTranslate="delcampoApp.stockInput.user">User</span> <span
+                                        class="fa fa-sort"></span></th>
+                                    <th><span jhiTranslate="delcampoApp.stockInput.historic">Historic</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let stockInput of stockInputs ;trackBy: trackId; let i = index">
+                                    <td>{{stockInput.registerDate | date:'medium'}}</td>
+                                    <td>{{stockInput.quantity}}</td>
+                                    <td><p jhiTranslate="{{'delcampoApp.StockState.' + stockInput.stockState}}">
+                                        {{stockInput.stockState}} zap</p>
+                                        <button class="btn btn-success btn-sm" (click)="editStockState(stockInput, i)"
+                                                type="button"><span class="fa fa-pencil"></span>
+                                            <span class="d-none d-md-inline"
+                                                  jhiTranslate="entity.action.edit">Edit</span></button>
+                                    </td>
+                                    <td>
+                                        <div *ngIf="stockInput.productId">
+                                            <a>{{stockInput.productName}}</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{stockInput.userLogin}}
+                                    </td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-success btn-sm"
+                                                (click)="getStockInputHistorial(stockInput.id)">
+                                            <span class="fa fa-eye"></span>
+                                            <span class="d-none d-md-inline"
+                                                  jhiTranslate="entity.action.view">View</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+                            <table class="table table-striped" *ngIf="stockInputHistorial">
+                                <thead>
+                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                                    <th jhiSortBy="registerDate"><span
+                                        jhiTranslate="delcampoApp.stockInputHasState.registerDate">Register Date</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="observations"><span
+                                        jhiTranslate="delcampoApp.stockInputHasState.observations">Observations</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="stockState"><span
+                                        jhiTranslate="delcampoApp.stockInputHasState.stockState">Stock State</span>
+                                        <span class="fa fa-sort"></span></th>
+
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let stockInputHasState of stockInputHistorial ;trackBy: trackId">
+                                    </td>
+                                    <td>{{stockInputHasState.registerDate | date:'medium'}}</td>
+                                    <td>{{stockInputHasState.observations}}</td>
+                                    <td jhiTranslate="{{'delcampoApp.StockState.' + stockInputHasState.stockState}}">
+                                        {{stockInputHasState.stockState}}
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                                <div>
+
+                                    <button class="btn btn-primary btn-sm" type="button"><span
+                                        class="d-none d-md-inline" jhiTranslate="delcampoApp.stockInput.goBack"
+                                        (click)="stockInputHistorial = undefined">Back</span></button>
+                                </div>
+                            </table>
+
+
+                            <div *ngIf="stockInputToEditState">
+
+
+                                <form name="editFormStateStock" role="form" novalidate
+                                      (ngSubmit)="saveStockInputHasState(stockInputToEditState.stockInput.id, stockInputHasState.stockState)"
+                                      #editFormStateStock="ngForm" class="pb-2">
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control-label"
+                                                   jhiTranslate="delcampoApp.stockInput.stockState"
+                                                   for="field_stockState">Stock State</label>
+                                            <select class="form-control" name="stockState"
+                                                    [(ngModel)]="stockInputHasState.stockState" id="field_stockState">
+                                                <option value="IN_TRANSIT">{{'delcampoApp.StockState.IN_TRANSIT' |
+                                                    translate}}
+                                                </option>
+                                                <option value="IN_SITE">{{'delcampoApp.StockState.IN_SITE' |
+                                                    translate}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label"
+                                                   jhiTranslate="delcampoApp.stockInputHasState.observations"
+                                                   for="field_observations">Observations</label>
+                                            <input type="text" class="form-control" name="observations"
+                                                   id="field_observations"
+                                                   [(ngModel)]="stockInputHasState.observations" maxlength="500"/>
+                                            <div
+                                                [hidden]="!(editFormStateStock.controls.observations?.dirty && editForm.controls.observations?.invalid)">
+                                                <small class="form-text text-danger"
+                                                       [hidden]="!editFormStateStock.controls.observations?.errors?.maxlength"
+                                                       jhiTranslate="entity.validation.maxlength"
+                                                       translateValues="{ max: 500 }">
+                                                    This field cannot be longer than 500 characters.
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                            (click)="cancelStockInputStateModitication()">
+                                        <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                                    </button>
+                                    <button type="submit" [disabled]="editFormStateStock.form.invalid || isSaving"
+                                            class="btn btn-success">
+                                        <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                                    </button>
+                                </form>
+
+
+                            </div>
+                        </div>
+                        <h3 *ngIf="priceListAdded" jhiTranslate="delcampoApp.product.priceListAdded">Price list
+                            added</h3>
+                        <h3 *ngIf="priceListEdited" jhiTranslate="delcampoApp.product.priceListEdited">Price list
+                            edited</h3>
+                        <div *ngIf="showTabs == 'agregarPrecio'" class="animated fadeIn">
+                            <form name="editFormPriceList" role="form" novalidate (ngSubmit)="savePriceList(product.id)"
+                                  #editFormPriceList="ngForm">
+                                <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.startDate"
+                                           for="field_startDate">Start Date</label>
+
+                                        <!-- input id="field_startDate" type="datetime-local" class="form-control"
+                                               name="startDate" [(ngModel)]="priceList.startDate" required/ -->
+                                               <p-calendar [style]="{'width' : '99.2%'}"
+                                               [inputStyle]="{'width' : '99.2%'}" [(ngModel)]="priceList.startDate"
+                                               [showTime]="true" name = "startDate" [minDate] = "minDate" required></p-calendar>
+
+
+                                    <div
+                                        [hidden]="!(editFormPriceList.controls.startDate?.dirty && editFormPriceList.controls.startDate?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editForm.controls.startDate?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.startDate?.errors?.ZonedDateTimelocal"
+                                               jhiTranslate="entity.validation.ZonedDateTimelocal">
+                                            This field should be a date and time.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.endDate"
+                                           for="field_endDate">End Date</label>
+                                      <!--input id="field_endDate" type="datetime-local" class="form-control"
+                                               name="endDate" [(ngModel)]="priceList.endDate"/ -->
+                                               <p-calendar [style]="{'width' : '99.2%'}"
+                                               [inputStyle]="{'width' : '99.2%'}" [(ngModel)]="priceList.endDate"
+                                               [showTime]="true" name = "endDate" [minDate] = "minDate" required></p-calendar>
+
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.price"
+                                           for="field_price">Price</label>
+                                    <input type="number" class="form-control" name="price" id="field_price"
+                                           [(ngModel)]="priceList.price" required min="0"/>
+                                    <div
+                                        [hidden]="!(editFormPriceList.controls.price?.dirty && editFormPriceList.controls.price?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.price?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.price?.errors?.min"
+                                               jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                                            This field should be at least 0.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.price?.errors?.number"
+                                               jhiTranslate="entity.validation.number">
+                                            This field should be a number.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.currency"
+                                           for="field_currency">Currency</label>
+                                    <select class="form-control" name="currency" [(ngModel)]="priceList.currency"
+                                            id="field_currency" required>
+                                        <option value="COP">{{'delcampoApp.Currency.COP' | translate}}</option>
+                                        <option value="USD">{{'delcampoApp.Currency.USD' | translate}}</option>
+                                        <option value="EUR">{{'delcampoApp.Currency.EUR' | translate}}</option>
+                                    </select>
+                                    <div
+                                        [hidden]="!(editFormPriceList.controls.currency?.dirty && editFormPriceList.controls.currency?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.currency?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                    </div>
+                                </div>
+                                <button type="submit" [disabled]="editFormPriceList.form.invalid || isSaving"
+                                        class="btn btn-success">
+                                    <span class="fa fa-save"></span>&nbsp;<span
+                                    jhiTranslate="entity.action.save">Save</span>
+                                </button>
+                            </form>
+                        </div>
+                        <div *ngIf="showTabs == 'editarPrecio'" class="animated fadeIn">
+                            <table class="table table-striped" *ngIf="priceListToEdit.id == null" class="col-12">
+                                <thead>
+                                <!-- th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+                        <th jhiSortBy="startDate"><span jhiTranslate="delcampoApp.priceList.startDate">Start Date</span> <span class="fa fa-sort"></span></th>
+                        <th jhiSortBy="endDate"><span jhiTranslate="delcampoApp.priceList.endDate">End Date</span> <span class="fa fa-sort"></span></th>
+                        <th jhiSortBy="price"><span jhiTranslate="delcampoApp.priceList.price">Price</span> <span class="fa fa-sort"></span></th>
+                        <th jhiSortBy="currency"><span jhiTranslate="delcampoApp.priceList.currency">Currency</span> <span class="fa fa-sort"></span></th -->
+                                <th><span jhiTranslate="delcampoApp.priceList.startDate">Start Date</span> <span
+                                    class="fa fa-sort"></span></th>
+                                <th><span jhiTranslate="delcampoApp.priceList.endDate">End Date</span> <span
+                                    class="fa fa-sort"></span></th>
+                                <th><span jhiTranslate="delcampoApp.priceList.price">Price</span> <span
+                                    class="fa fa-sort"></span></th>
+                                <th><span jhiTranslate="delcampoApp.priceList.currency">Currency</span> <span
+                                    class="fa fa-sort"></span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let priceList of pricesList ;trackBy: trackId; let i = index">
+                                    <td>{{priceList.startDate | date:'medium'}}</td>
+                                    <td>{{priceList.endDate | date:'medium'}}</td>
+                                    <td>{{priceList.price}}</td>
+                                    <td jhiTranslate="{{'delcampoApp.Currency.' + priceList.currency}}">
+                                        {{priceList.currency}}
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="d-flex justify-content-between">
+                                            <div (click)="selectPriceList(priceList)" replaceUrl="true"
+                                                    queryParamsHandling="merge" class="buttons-options">
+                                                <span class="fa fa-pencil"></span>
+                                            </div>
+                                            <div (click)="deletePriceList(priceList.id)" class="buttons-options">
+                                                <span class="fa fa-trash"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <form name="editFormPriceList" role="form" novalidate (ngSubmit)="updatePriceList()"
+                                  #editFormPriceList="ngForm" *ngIf="priceListToEdit.id != null" class="animated fadeIn">
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.startDate"
+                                           for="field_startDate">Start Date</label>
+                                    <div class="d-flex">
+                                        <!-- input id="field_startDate" type="datetime-local" class="form-control"
+                                               name="startDate" [(ngModel)]="priceListToEdit.startDate" required/ -->
+                          <p-calendar [(ngModel)]="priceListToEdit.startDate" [showTime]="true" name = "startDate" [minDate] = "minDate" required>
+                          </p-calendar>
+                                    </div>
+                                    <div
+                                        [hidden]="!(editFormPriceList.controls.startDate?.dirty && editFormPriceList.controls.startDate?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editForm.controls.startDate?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.startDate?.errors?.ZonedDateTimelocal"
+                                               jhiTranslate="entity.validation.ZonedDateTimelocal">
+                                            This field should be a date and time.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.endDate"
+                                           for="field_endDate">End Date</label>
+                                    <div class="d-flex">
+                                        <!-- input id="field_endDate" type="datetime-local" class="form-control"
+                                               name="endDate" [(ngModel)]="priceListToEdit.endDate"/ -->
+                                               <p-calendar [(ngModel)]="priceListToEdit.endDate"
+                                               [showTime]="true" name = "endDate" [minDate] = "minDate" required></p-calendar>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.price"
+                                           for="field_price">Price</label>
+                                    <input type="number" class="form-control" name="price" id="field_price"
+                                           [(ngModel)]="priceListToEdit.price" required min="0"/>
+                                    <div
+                                        [hidden]="!(editFormPriceList.controls.price?.dirty && editFormPriceList.controls.price?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.price?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.price?.errors?.min"
+                                               jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                                            This field should be at least 0.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.price?.errors?.number"
+                                               jhiTranslate="entity.validation.number">
+                                            This field should be a number.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.priceList.currency"
+                                           for="field_currency">Currency</label>
+                                    <select class="form-control" name="currency" [(ngModel)]="priceListToEdit.currency"
+                                            id="field_currency" required>
+                                        <option value="COP">{{'delcampoApp.Currency.COP' | translate}}</option>
+                                        <option value="USD">{{'delcampoApp.Currency.USD' | translate}}</option>
+                                        <option value="EUR">{{'delcampoApp.Currency.EUR' | translate}}</option>
+                                    </select>
+                                    <div
+                                        [hidden]="!(editFormPriceList.controls.currency?.dirty && editFormPriceList.controls.currency?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editFormPriceList.controls.currency?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        (click)="backEditListPrice()">
+                                    <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                                </button>
+                                <button type="submit" [disabled]="editFormPriceList.form.invalid || isSaving"
+                                        class="btn btn-success">
+                                    <span class="fa fa-save"></span>&nbsp;<span
+                                    jhiTranslate="entity.action.save">Save</span>
+                                </button>
+                            </form>
+                        </div>
+                        <h3 *ngIf="discountListAdded" jhiTranslate="delcampoApp.product.discountListAdded">Discount list
+                            added</h3>
+                        <h3 *ngIf="discountListEdited" jhiTranslate="delcampoApp.product.discountListEdited">Discount
+                            list edited</h3>
+                        <div *ngIf="showTabs == 'agregarDescuento'" class="animated fadeIn">
+                            <form name="editDiscountListForm" role="form" novalidate
+                                  (ngSubmit)="saveDiscountList(discountList)" #editDiscountListForm="ngForm">
+                                <jhi-alert-error></jhi-alert-error>
+                                <div class="form-group" [hidden]="!discountList.id">
+                                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                                    <input type="text" class="form-control" id="id" name="id"
+                                           [(ngModel)]="discountList.id" readonly/>
+                                </div>
+                                <div class="form-row">
+                                   <div class="form-group col-md-6">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.discountList.startDate"
+                                           for="field_startDate">Start Date</label>
+
+                                     <!--input id="field_startDate" type="datetime-local" class="form-control"
+                                               name="startDate" [(ngModel)]="discountList.startDate" required/-->
+                                               <p-calendar [style]="{'width' : '99.2%'}"
+                                               [inputStyle]="{'width' : '99.2%'}" [(ngModel)]="discountList.startDate"
+                                               [showTime]="true" name = "startDate" [minDate] = "minDate" required></p-calendar>
+
+                                    <div
+                                        [hidden]="!(editDiscountListForm.controls.startDate?.dirty && editForm.controls.startDate?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editDiscountListForm.controls.startDate?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editDiscountListForm.controls.startDate?.errors?.ZonedDateTimelocal"
+                                               jhiTranslate="entity.validation.ZonedDateTimelocal">
+                                            This field should be a date and time.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.discountList.endDate"
+                                           for="field_endDate">End Date</label>
+
+                                 <!-- input id="field_endDate" type="datetime-local" class="form-control"
+                                               name="endDate" [(ngModel)]="discountList.endDate"/ -->
+                                               <p-calendar [style]="{'width' : '99.2%'}"
+                                               [inputStyle]="{'width' : '99.2%'}" [(ngModel)]="discountList.endDate"
+                                               [showTime]="true" name = "endDate" [minDate] = "minDate" required></p-calendar>
+
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.discountList.discount"
+                                           for="field_discount">Discount</label>
+                                    <input type="number" class="form-control" name="discount" id="field_discount"
+                                           [(ngModel)]="discountList.discount" required min="0" max="99"/>
+                                    <div
+                                        [hidden]="!(editDiscountListForm.controls.discount?.dirty && editDiscountListForm.controls.discount?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editDiscountListForm.controls.discount?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editDiscountListForm.controls.discount?.errors?.min"
+                                               jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                                            This field should be at least 0.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editDiscountListForm.controls.discount?.errors?.max"
+                                               jhiTranslate="entity.validation.max" translateValues="{ max: 99 }">
+                                            This field cannot be more than 99.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editDiscountListForm.controls.discount?.errors?.number"
+                                               jhiTranslate="entity.validation.number">
+                                            This field should be a number.
+                                        </small>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        (click)="showTabs = ''">
+                                    <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                                </button>
+                                <button type="submit" [disabled]="editDiscountListForm.form.invalid || isSaving"
+                                        class="btn btn-success">
+                                    <span class="fa fa-save"></span>&nbsp;<span
+                                    jhiTranslate="entity.action.save">Save</span>
+                                </button>
+                            </form>
+                        </div>
+                        <div *ngIf="showTabs == 'editarDescuento'" class="animated fadeIn">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                                    <th jhiSortBy="startDate"><span jhiTranslate="delcampoApp.discountList.startDate">Start Date</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="endDate"><span jhiTranslate="delcampoApp.discountList.endDate">End Date</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th jhiSortBy="discount"><span jhiTranslate="delcampoApp.discountList.discount">Discount</span>
+                                        <span class="fa fa-sort"></span></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let discountList of discountsList ;trackBy: trackId; let i = index">
+                                    <td>{{discountList.startDate | date:'medium'}}</td>
+                                    <td>{{discountList.endDate | date:'medium'}}</td>
+                                    <td>{{discountList.discount}}</td>
+                                    <td class="text-right">
+                                        <div class="d-flex justify-content-around">
+                                            <div (click)="selectDiscountList(discountList)" replaceUrl="true"
+                                                    queryParamsHandling="merge" class="buttons-options">
+                                                <span class="fa fa-pencil"></span>
+                                            </div>
+                                            <div (click)="deleteDiscountList(discountList.id, i)" class="buttons-options">
+                                                <span class="fa fa-trash"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="showTabs =='agregarImagen'" class="animated fadeIn">
+                            <form name="uploadImage" role="form" novalidate (ngSubmit)="saveImage(image,product.id)"
+                                  #uploadImage="ngForm">
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.image.imageName"
+                                           for="field_imageName"
+                                           [ngbTooltip]="'delcampoApp.image.help.imageName' | translate">Image
+                                        Name</label>
+                                    <input type="text" class="form-control" name="imageName" id="field_imageName"
+                                           [(ngModel)]="image.imageName" required maxlength="40"/>
+                                    <div
+                                        [hidden]="!(editForm.controls.imageName?.dirty && editForm.controls.imageName?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editForm.controls.imageName?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editForm.controls.imageName?.errors?.maxlength"
+                                               jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                                            This field cannot be longer than 40 characters.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="delcampoApp.image.image"
+                                           for="field_image" [ngbTooltip]="'delcampoApp.image.help.image' | translate">Image</label>
+                                    <div>
+                                        <img [src]="'data:' + image.imageContentType + ';base64,' + image.image"
+                                             style="max-height: 100px;" *ngIf="image.image" alt="image image"/>
+                                        <div *ngIf="image.image" class="form-text text-danger clearfix">
+                                            <span class="pull-left">{{image.imageContentType}}, {{byteSize(image.image)}}</span>
+                                            <button type="button"
+                                                    (click)="clearInputImage('image', 'imageContentType', 'fileImage')"
+                                                    class="btn btn-danger btn-xs pull-right">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </div>
+                                        <input type="file" id="file_image"
+                                               (change)="setFileData($event, image, 'image', true)" accept="image/*"
+                                               jhiTranslate="entity.action.addimage"/>
+                                    </div>
+                                    <input type="hidden" class="form-control" name="image" id="field_image"
+                                           [(ngModel)]="image.image" required/>
+                                    <input type="hidden" class="form-control" name="imageContentType"
+                                           id="field_imageContentType" [(ngModel)]="image.imageContentType"/>
+                                    <div
+                                        [hidden]="!(editForm.controls.image?.dirty && editForm.controls.image?.invalid)">
+                                        <small class="form-text text-danger"
+                                               [hidden]="!editForm.controls.image?.errors?.required"
+                                               jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                    </div>
+                                </div>
+                                <button type="submit" [disabled]="uploadImage.form.invalid || disabledAtSaveImage"
+                                        class="btn btn-success">
+                                    <span class="fa fa-save"></span>&nbsp;<span
+                                    jhiTranslate="entity.action.save">Subir</span>
+                                </button>
+                            </form>
+                        </div>
+                        <div *ngIf="showTabs == 'editarImagen'" class="pt-4 pb-4 animated fadeIn">
+                            <h3 *ngIf="imageEdited">Imagen Editada!</h3>
+                            <div *ngIf="productImages.length > 0 && !imageToEdit">
+                                <div *ngFor="let image of productImages ; let i = index">
+                                    <img [src]="'data:' + image.imageContentType + ';base64,' + image.image"
+                                         style="max-height: 100px;" *ngIf="image.image" alt="image image"/>
+                                    <button type="button" class="btn btn-success btn-sm"
+                                            (click)="selectImage(image, i)">
+                                        <span class="fa fa-pencil"></span>
+                                        <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="deleteImage(image.id, i)">
+                                        <span class="fa fa-remove"></span>
+                                        <span class="d-none d-md-inline"
+                                              jhiTranslate="entity.action.delete">Delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="productImages.length > 0 && imageToEdit">
+                                <form name="editImageForm" role="form" novalidate (ngSubmit)="updateImage()"
+                                      #editImageForm="ngForm">
+                                    <jhi-alert-error></jhi-alert-error>
+                                    <div class="form-group">
+                                        <label class="form-control-label" jhiTranslate="delcampoApp.image.imageName"
+                                               for="field_imageName"
+                                               [ngbTooltip]="'delcampoApp.image.help.imageName' | translate">Image
+                                            Name</label>
+                                        <input type="text" class="form-control" name="imageName" id="field_imageName"
+                                               [(ngModel)]="imageToEdit.imageName" required maxlength="40"/>
+                                        <div
+                                            [hidden]="!(editForm.controls.imageName?.dirty && editForm.controls.imageName?.invalid)">
+                                            <small class="form-text text-danger"
+                                                   [hidden]="!editForm.controls.imageName?.errors?.required"
+                                                   jhiTranslate="entity.validation.required">
+                                                This field is required.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                   [hidden]="!editForm.controls.imageName?.errors?.maxlength"
+                                                   jhiTranslate="entity.validation.maxlength"
+                                                   translateValues="{ max: 40 }">
+                                                This field cannot be longer than 40 characters.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" jhiTranslate="delcampoApp.image.image"
+                                               for="field_image"
+                                               [ngbTooltip]="'delcampoApp.image.help.image' | translate">Image</label>
+                                        <div>
+                                            <img
+                                                [src]="'data:' + imageToEdit.imageContentType + ';base64,' + imageToEdit.image"
+                                                style="max-height: 100px;" *ngIf="imageToEdit.image" alt="image image"/>
+                                            <div *ngIf="imageToEdit.image" class="form-text text-danger clearfix">
+                                                <span class="pull-left">{{imageToEdit.imageContentType}}, {{byteSize(imageToEdit.image)}}</span>
+                                                <button type="button"
+                                                        (click)="clearInputImage('image', 'imageContentType', 'fileImage')"
+                                                        class="btn btn-danger btn-xs pull-right">
+                                                    <span class="fa fa-times"></span>
+                                                </button>
+                                            </div>
+                                            <input type="file" id="file_image"
+                                                   (change)="setFileData($event, imageToEdit, 'image', true)"
+                                                   accept="image/*" jhiTranslate="entity.action.addimage"/>
+                                        </div>
+                                        <input type="hidden" class="form-control" name="image" id="field_image"
+                                               [(ngModel)]="imageToEdit.image" required/>
+                                        <input type="hidden" class="form-control" name="imageContentType"
+                                               id="field_imageContentType" [(ngModel)]="imageToEdit.imageContentType"/>
+                                        <div
+                                            [hidden]="!(editForm.controls.image?.dirty && editForm.controls.image?.invalid)">
+                                            <small class="form-text text-danger"
+                                                   [hidden]="!editForm.controls.image?.errors?.required"
+                                                   jhiTranslate="entity.validation.required">
+                                                This field is required.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button type="submit" [disabled]="editImageForm.form.invalid || isSaving"
+                                                class="btn btn-success">
+                                            <span class="fa fa-save"></span>&nbsp;<span
+                                            jhiTranslate="entity.action.save">Save</span>
+                                        </button>
+                                    </div>
+                                    <div class="pt-2">
+                                        <button class="btn btn-danger btn-sm" (click)="imageToEdit = undefined">VOLVER
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div *ngIf="productImages.length < 1">
+                                <label>Este producto no tiene ninguna imagen</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="!product.id">
+            <button (click)="imageEditionOption = 'agregar'" jhiTranslate="delcampoApp.product.imageQuestion"
+                    type="button" class="btn btn-success"
+            >Add image
+            </button>
+            <button *ngIf="productImagesAtSave.length > 0" (click)="imageEditionOption = 'editar'"
+                    jhiTranslate="delcampoApp.product.addedImages" type="button" class="btn btn-success"
+            >Added Images
+            </button>
+        </div>
+        <!-- Subir la imagen del producto al crear-->
+        <div *ngIf="imageEditionOption =='agregar'">
+
+            <form name="uploadImage" role="form" novalidate
+                  (ngSubmit)="preAddImage(image) && saveImage(image,product.id)" #uploadImage="ngForm">
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.image.imageName" for="field_imageName"
+                           [ngbTooltip]="'delcampoApp.image.help.imageName' | translate">Image Name</label>
+                    <input type="text" class="form-control" name="imageName" id="field_imageName"
+                           [(ngModel)]="image.imageName" required maxlength="40"/>
+                    <div [hidden]="!(editForm.controls.imageName?.dirty && editForm.controls.imageName?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.imageName?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.imageName?.errors?.maxlength"
+                               jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                            This field cannot be longer than 40 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="delcampoApp.image.image" for="field_image"
+                           [ngbTooltip]="'delcampoApp.image.help.image' | translate">Image</label>
+                    <div>
+                        <img [src]="'data:' + image.imageContentType + ';base64,' + image.image"
+                             style="max-height: 100px;" *ngIf="image.image" alt="image image"/>
+                        <div *ngIf="image.image" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{image.imageContentType}}, {{byteSize(image.image)}}</span>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')"
+                                    class="btn btn-danger btn-xs pull-right">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </div>
+                        <input type="file" id="file_image" (change)="setFileData($event, image, 'image', true)"
+                               accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="image" id="field_image"
+                           [(ngModel)]="image.image" required/>
+                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                           [(ngModel)]="image.imageContentType"/>
+                    <div [hidden]="!(editForm.controls.image?.dirty && editForm.controls.image?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.image?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="uploadImage.form.invalid || isSaving" class="btn btn-success">
+                    <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Subir</span>
+                </button>
+            </form>
+        </div>
+        <div *ngIf="imageEditionOption == 'editar' && !product.id">
+            <div>
+                <div *ngFor="let image of productImagesAtSave ; let i = index">
+                    <img [src]="'data:' + image.imageContentType + ';base64,' + image.image" style="max-height: 100px;"
+                         *ngIf="image.image" alt="image image"/>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deletePreAddImage(i)">
+                        <span class="fa fa-remove"></span>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+
+    <!-- div style="margin-bottom: 800px">
+      <button type="button" name="button" (click) = "testDate()">TEST</button>
+      <p-calendar [(ngModel)]="date" [showTime]="true" name = "date" (onSelect) = "onSelect($event)" [minDate] = "minDate"></p-calendar>
+    </div -->
+
+
+</form>

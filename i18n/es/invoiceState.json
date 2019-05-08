@@ -1,0 +1,14 @@
+{
+    "delcampoApp": {
+        "InvoiceState" : {
+            "null": "",
+            "NO_PAID": "NO_PAID",
+            "PAID": "PAID",
+            "SCHEDULED": "SCHEDULED",
+            "PACKED": "PACKED",
+            "IN_TRANSIT": "IN_TRANSIT",
+            "DELIVERED": "DELIVERED",
+            "REPROGRAMED": "REPROGRAMED"
+        }
+    }
+}

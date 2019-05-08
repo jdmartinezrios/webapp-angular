@@ -1,0 +1,56 @@
+
+{
+    "delcampoApp": {
+        "product" : {
+            "home": {
+                "title": "Products",
+                "createLabel": "Create a new Product",
+                "createOrEditLabel": "Create or edit a Product",
+                "search": "Search for Product",
+                "productDetail": "Product detail",
+                "productValues": "Product values",
+                "productPrice": "Product price",
+                "productDiscount": "Product discount"
+            },
+            "created": "A new Product is created with identifier {{ param }}",
+            "updated": "A Product is updated with identifier {{ param }}",
+            "deleted": "A Product is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Product {{ id }}?"
+            },
+            "detail": {
+                "title": "Product"
+            },
+            "name": "Variety",
+            "description": "Nutritional Value",
+            "measurementUnit": "Measurement Unit",
+            "stock": "Stock",
+            "image": "Image",
+            "base": "Base",
+            "type": "Type",
+            "category": "Category",
+            "manufacturedType": "Manufactured Type",
+            "youtube": "Youtube",
+            "imageQuestion": "Add image",
+            "imageEditQuestion": "Edit image",
+            "discountListQuestion": "Add discount list",
+            "discountListEditQuestion": "Edit discount list",
+            "addedImages":"Added images",
+            "addListPrice": "Add List Price",
+            "editListPrices": "Edit List Price",
+            "priceListAdded": "Price list added",
+            "priceListEdited": "Price list edited",
+            "discountListAdded": "Discount list added",
+            "discountListEdited": "Discount list edited",
+            "isManufactured": "Manufactured",
+            "viewStockInputs": "View Stock-inputs list.",
+            "addStockInput": "Add Stock-input",
+            "help": {
+                "name": "Variety of product",
+                "description": "Description of product",
+                "measurementUnit": "Measurement Unit for the product",
+                "stock": "Stock of product"
+            }
+        }
+    }
+}

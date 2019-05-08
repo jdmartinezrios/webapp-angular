@@ -1,0 +1,28 @@
+
+{
+    "delcampoApp": {
+        "manufacturedProductType" : {
+            "home": {
+                "title": "Tipos Procesamiento Producto",
+                "createLabel": "Crear nuevo Tipo Procesamiento",
+                "createOrEditLabel": "Crear o editar Tipo Procesamiento",
+                "search": "Buscar Tipo Procesamiento"
+            },
+            "created": "Un nuevo Tipo Procesamiento ha sido creado con el identificador {{ param }}",
+            "updated": "Un Tipo Procesamiento ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Tipo Procesamiento ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el Tipo Procesamiento {{ id }}?"
+            },
+            "detail": {
+                "title": "Tipo Procesamiento Producto"
+            },
+            "manufacturedProductTypeName": "Nombre",
+            "manufacturedProductEnabled": "Activo / Inactivo",
+            "help": {
+                "manufacturedProductTypeName": "Nombre del tipo procesamiento del producto",
+                "manufacturedProductEnabled": "Tipo Procesamiento: Activo / Inactivo"
+            }
+        }
+    }
+}

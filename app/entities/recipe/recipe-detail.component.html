@@ -1,0 +1,50 @@
+
+<div *ngIf="recipe">
+    <h2><span jhiTranslate="delcampoApp.recipe.detail.title">Recipe</span> {{recipe.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.recipe.name" [ngbTooltip]="'delcampoApp.recipe.help.name' | translate">Name</span></dt>
+        <dd>
+            <span>{{recipe.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipe.personsQuantity" [ngbTooltip]="'delcampoApp.recipe.help.personsQuantity' | translate">Persons Quantity</span></dt>
+        <dd>
+            <span>{{recipe.personsQuantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipe.description" [ngbTooltip]="'delcampoApp.recipe.help.description' | translate">Description</span></dt>
+        <dd>
+            <span>{{recipe.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipe.recipeEnabled" [ngbTooltip]="'delcampoApp.recipe.help.recipeEnabled' | translate">Recipe Enabled</span></dt>
+        <dd>
+            <span>{{recipe.recipeEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipe.item">Item</span></dt>
+        <dd>
+            <div *ngIf="recipe.itemId">
+                <a [routerLink]="['/recipe-item', recipe.itemId]">{{recipe.itemId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipe.youtube">Youtube</span></dt>
+        <dd>
+            <span *ngFor="let youtube of recipe.youtubes; let last = last">
+                <a [routerLink]="['/youtube-video', youtube?.id ]">{{youtube.youtubeName}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'recipe/'+ recipe.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

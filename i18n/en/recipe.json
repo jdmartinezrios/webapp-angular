@@ -1,0 +1,35 @@
+
+{
+    "delcampoApp": {
+        "recipe" : {
+            "home": {
+                "title": "Recipes",
+                "createLabel": "Create a new Recipe",
+                "createOrEditLabel": "Create or edit a Recipe",
+                "search": "Search for Recipe"
+            },
+            "created": "A new Recipe is created with identifier {{ param }}",
+            "updated": "A Recipe is updated with identifier {{ param }}",
+            "deleted": "A Recipe is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Recipe {{ id }}?"
+            },
+            "detail": {
+                "title": "Recipe"
+            },
+            "name": "Name",
+            "personsQuantity": "Persons Quantity",
+            "description": "Description",
+            "recipeEnabled": "Recipe Enabled",
+            "image": "Image",
+            "item": "Item",
+            "youtube": "Youtube",
+            "help": {
+                "name": "Name of product",
+                "personsQuantity": "Quantity of persons",
+                "description": "Description of product",
+                "recipeEnabled": "Recipe: Enabled / Disabled"
+            }
+        }
+    }
+}

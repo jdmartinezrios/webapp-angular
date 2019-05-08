@@ -1,0 +1,52 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title text-success font-weight-bold" id="myManufacturedProductTypeLabel" jhiTranslate="delcampoApp.manufacturedProductType.home.createOrEditLabel">Create or edit a Manufactured Product Type</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!manufacturedProductType.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="manufacturedProductType.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.manufacturedProductType.manufacturedProductTypeName" for="field_manufacturedProductTypeName" [ngbTooltip]="'delcampoApp.manufacturedProductType.help.manufacturedProductTypeName' | translate">Manufactured Product Type Name</label>
+            <input type="text" class="form-control" name="manufacturedProductTypeName" id="field_manufacturedProductTypeName"
+                [(ngModel)]="manufacturedProductType.manufacturedProductTypeName" required maxlength="40"/>
+            <div [hidden]="!(editForm.controls.manufacturedProductTypeName?.dirty && editForm.controls.manufacturedProductTypeName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.manufacturedProductTypeName?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.manufacturedProductTypeName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.manufacturedProductType.manufacturedProductEnabled" [ngbTooltip]="'delcampoApp.manufacturedProductType.help.manufacturedProductEnabled' | translate">Manufactured Product Enabled</label>
+            <input type="checkbox" class="form-control cmn-toggle cmn-toggle-round" name="manufacturedProductEnabled" id="field_manufacturedProductEnabled"
+                [(ngModel)]="manufacturedProductType.manufacturedProductEnabled" />
+                <label for="field_manufacturedProductEnabled"></label>
+            <div [hidden]="!(editForm.controls.manufacturedProductEnabled?.dirty && editForm.controls.manufacturedProductEnabled?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.manufacturedProductEnabled?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

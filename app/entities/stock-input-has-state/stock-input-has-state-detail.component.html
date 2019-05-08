@@ -1,0 +1,40 @@
+
+<div *ngIf="stockInputHasState">
+    <h2><span jhiTranslate="delcampoApp.stockInputHasState.detail.title">Stock Input Has State</span> {{stockInputHasState.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.stockInputHasState.registerDate">Register Date</span></dt>
+        <dd>
+            <span>{{stockInputHasState.registerDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.stockInputHasState.observations">Observations</span></dt>
+        <dd>
+            <span>{{stockInputHasState.observations}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.stockInputHasState.stockState">Stock State</span></dt>
+        <dd>
+            <span jhiTranslate="{{'delcampoApp.StockState.' + stockInputHasState.stockState}}">{{stockInputHasState.stockState}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.stockInputHasState.stockInput">Stock Input</span></dt>
+        <dd>
+            <div *ngIf="stockInputHasState.stockInputId">
+                <a [routerLink]="['/stock-input', stockInputHasState.stockInputId]">{{stockInputHasState.stockInputId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'stock-input-has-state/'+ stockInputHasState.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,27 @@
+
+{
+    "delcampoApp": {
+        "stateProvince" : {
+            "home": {
+                "title": "State Provinces",
+                "createLabel": "Create a new State Province",
+                "createOrEditLabel": "Create or edit a State Province",
+                "search": "Search for State Province"
+            },
+            "created": "A new State Province is created with identifier {{ param }}",
+            "updated": "A State Province is updated with identifier {{ param }}",
+            "deleted": "A State Province is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete State Province {{ id }}?"
+            },
+            "detail": {
+                "title": "State Province"
+            },
+            "stateName": "State Name",
+            "country": "Country",
+            "help": {
+                "stateName": "The name of state"
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+
+{
+    "delcampoApp": {
+        "product" : {
+            "home": {
+                "title": "Productos",
+                "createLabel": "Crear nuevo Producto",
+                "createOrEditLabel": "Crear o editar Producto",
+                "search": "Buscar Producto",
+                "productDetail": "Detalle del producto",
+                "productValues": "Valores del producto",
+                "productPrice": "Precio del producto",
+                "productDiscount": "Descuento del producto"
+            },
+            "created": "Un nuevo Producto ha sido creado con el identificador {{ param }}",
+            "updated": "Un Producto ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Producto ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Producto {{ id }}?"
+            },
+            "detail": {
+                "title": "Producto"
+            },
+            "name": "Variedad",
+            "description": "Valores Nutricionales",
+            "measurementUnit": "Unidad de Medida",
+            "stock": "Existencias",
+            "image": "Imagen",
+            "base": "Producto Base",
+            "type": "Tipo de Producto",
+            "category": "Categoría",
+            "manufacturedType": "Tipo procesamiento producto",
+            "youtube": "URL video de Youtube",
+            "imageQuestion": "Agregar imagen",
+            "imageEditQuestion": "Editar imagen",
+            "discountListQuestion": "Agregar lista de descuentos",
+            "discountListEditQuestion": "Editar lista de descuentos",
+            "addedImages":"Imágenes añadidas",
+            "addListPrice": "Añadir lista de precios",
+            "editListPrices": "Editar lista de precios",
+            "priceListAdded": "Lista de precios añadida",
+            "priceListEdited": "Lista de precios editada",
+            "discountListAdded": "Lista de descuentos agregada",
+            "discountListEdited": "Lista de descuentos editada",
+            "isManufactured": "Procesado",
+            "viewStockInputs": "Ver lista de registro de existencias",
+            "addStockInput": "Agregar Existencias",
+            "help": {
+                "name": "Variedad del Producto",
+                "description": "Descripción del Producto (Valores Nutricionales)",
+                "measurementUnit": "Unidad de medida para el Producto",
+                "stock": "Existencias disponibles del Producto"
+            }
+        }
+    }
+}

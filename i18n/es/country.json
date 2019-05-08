@@ -1,0 +1,28 @@
+
+{
+    "delcampoApp": {
+        "country" : {
+            "home": {
+                "title": "Países",
+                "createLabel": "Crear nuevo País",
+                "createOrEditLabel": "Crear o editar País",
+                "search": "Buscar País"
+            },
+            "created": "Un nuevo País ha sido creado con el identificador {{ param }}",
+            "updated": "Un País ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un País ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el País {{ id }}?"
+            },
+            "detail": {
+                "title": "País"
+            },
+            "countryCode": "Código",
+            "countryName": "Nombre",
+            "help": {
+                "countryCode": "Código del país",
+                "countryName": "Nombre del país"
+            }
+        }
+    }
+}

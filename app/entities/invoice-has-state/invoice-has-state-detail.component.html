@@ -1,0 +1,44 @@
+ sga
+<div *ngIf="invoiceHasState">
+    <h2><span jhiTranslate="delcampoApp.invoiceHasState.detail.title">Invoice Has State</span> {{invoiceHasState.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.invoiceHasState.registerDate">Register Date</span></dt>
+        <dd>
+            <span>{{invoiceHasState.registerDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoiceHasState.observations">Observations</span></dt>
+        <dd>
+            <span>{{invoiceHasState.observations}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoiceHasState.invoiceState">Invoice State</span></dt>
+        <dd>
+            <span jhiTranslate="{{'delcampoApp.InvoiceState.' + invoiceHasState.invoiceState}}">{{invoiceHasState.invoiceState}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoiceHasState.user">User</span></dt>
+        <dd>
+            {{invoiceHasState.userLogin}}
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoiceHasState.invoice">Invoice</span></dt>
+        <dd>
+            <div *ngIf="invoiceHasState.invoiceId">
+                <a [routerLink]="['/invoice', invoiceHasState.invoiceId]">{{invoiceHasState.invoiceId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'invoice-has-state/'+ invoiceHasState.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

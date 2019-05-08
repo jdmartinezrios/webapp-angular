@@ -1,0 +1,36 @@
+
+<div *ngIf="zone">
+    <h2><span jhiTranslate="delcampoApp.zone.detail.title">Zone</span> {{zone.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.zone.zoneName" [ngbTooltip]="'delcampoApp.zone.help.zoneName' | translate">Zone Name</span></dt>
+        <dd>
+            <span>{{zone.zoneName}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.zone.zoneEnabled" [ngbTooltip]="'delcampoApp.zone.help.zoneEnabled' | translate">Zone Enabled</span></dt>
+        <dd>
+            <span>{{zone.zoneEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.zone.city">City</span></dt>
+        <dd>
+            <div *ngIf="zone.cityId">
+                <a [routerLink]="['/city', zone.cityId]">{{zone.cityCityName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'zone/'+ zone.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

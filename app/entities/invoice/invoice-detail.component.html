@@ -1,0 +1,56 @@
+
+<div *ngIf="invoice">
+    <h2><span jhiTranslate="delcampoApp.invoice.detail.title">Invoice</span> {{invoice.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.invoice.invoiceDate">Invoice Date</span></dt>
+        <dd>
+            <span>{{invoice.invoiceDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoice.invoiceNumber">Invoice Number</span></dt>
+        <dd>
+            <span>{{invoice.invoiceNumber}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoice.payed">Payed</span></dt>
+        <dd>
+            <span>{{invoice.payed}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoice.paymentDate">Payment Date</span></dt>
+        <dd>
+            <span>{{invoice.paymentDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoice.surcharge">Surcharge</span></dt>
+        <dd>
+            <span>{{invoice.surcharge}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoice.total">Total</span></dt>
+        <dd>
+            <span>{{invoice.total}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoice.customer">Customer</span></dt>
+        <dd>
+            {{invoice.customerId}}
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.invoice.location">Location</span></dt>
+        <dd>
+            <div *ngIf="invoice.locationId">
+                <a [routerLink]="['/location', invoice.locationId]">{{invoice.locationId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'invoice/'+ invoice.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

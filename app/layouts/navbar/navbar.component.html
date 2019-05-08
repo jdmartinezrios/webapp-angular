@@ -1,0 +1,178 @@
+<!-- first navbar  -->
+<nav class="navbar navbar-light navbar-expand-md jh-navbar secondNavbar pt-1 pb-1" *ngIf="router.url !== '/' && !isAuthenticated() else adminMenu">
+    <div class="jh-logo-container float-left">
+        <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a class="navbar-brand logo navbar-logoDelcampo" routerLink="/" (click)="collapseNavbar()">
+            <!--span class="logo-img"></span-->
+            <!-- <span class="navbar-title display-4 font-weight-bold">Del<span class="font-weight-normal camp">campo</span> <i class="fa fa-leaf"></i></span></span> -->
+            <img class="logoCampo" src="../../../content/images/logoNavbar.png" alt="logo" height="50" width="150">
+        </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="!isAuthenticated()">
+                <a class="nav-link text-white text-uppercase font-weight-bold" routerLink="/" (click)="collapseNavbar()">
+                    <span>
+                        <span jhiTranslate="global.menu.home">Home</span>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngSwitchCase="true">
+                <a class="nav-link text-white text-uppercase font-weight-bold" routerLink="dashboard" (click)="collapseNavbar()">
+                    <span>
+                        <span jhiTranslate="global.menu.dashboard">Dashboard</span>
+                    </span>
+                </a>
+            </li>           
+            <li ngbDropdown class="nav-item dropdown pointer" *ngIf="languages">
+                <a class="nav-link dropdown-toggle text-white text-uppercase font-weight-bold" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown" *ngIf="languages.length > 1">
+                    <span>
+                        <span jhiTranslate="global.menu.language">Language</span>
+                    </span>
+                </a>
+                <ul class="dropdown-menua animated fadeIn" ngbDropdownMenu *ngIf="languages.length > 1">
+                    <li *ngFor="let language of languages">
+                        <a class="dropdown-item aDropDown" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
+                    </li>
+                </ul>
+            </li>
+            <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link dropdown-toggle text-white text-uppercase font-weight-bold" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
+                  <span *ngIf="!getImageUrl()">
+                    <span jhiTranslate="global.menu.account.main">
+                      Account
+                    </span>
+                  </span>
+                    <span *ngIf="getImageUrl()">
+                      <img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">
+                  </span>
+                </a>
+                <ul class="dropdown-menu animated fadeIn" ngbDropdownMenu>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item aDropDown" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.account.settings">Settings</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item aDropDown" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.account.password">Password</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item aDropDown" (click)="logout()" id="logout">
+                            <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.account.logout">Sign out</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="false">
+                        <a class="dropdown-item aDropDown" (click)="login()" id="login">
+                            <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.account.login">Sign in</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="false">
+                        <a class="dropdown-item aDropDown" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-user-plus" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.account.register">Register</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- end first navbar -->
+<!--  [hidden]="isAuthenticated()" -->
+<!-- Second navbar -->
+<ng-template #adminMenu>
+    <nav class="navbar navbar-light navbar-expand-md fixed-top jh-navbar bg-transparent" id="navbarFix" *ngIf="router.url === '/'">
+        <div class="jh-logo-container float-left">
+            <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a class="navbar-brand logo navbar-logoDelcampo bg-transparent" routerLink="/" (click)="collapseNavbar()" id="first-logo">
+                <span id="delCampo" class="text-white"><small>DelCAMPO v1.0.0</small></span>
+                <img class="logoCampo" id="logoCampo" src="../../../content/images/logoNavbar.png" alt="logo" height="50" width="150">
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbarResponsive" [ngSwitch]="isAuthenticated()">
+            <ul class="navbar-nav ml-auto" id="navItems">
+                <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="!isAuthenticated()">
+                    <a class="nav-link text-white text-uppercase font-weight-bold" routerLink="/" (click)="collapseNavbar()">
+                    <span>
+                        <span jhiTranslate="global.menu.home">Home</span>
+                    </span>
+                    </a>
+                </li>
+                <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngSwitchCase="true">
+                    <a class="nav-link text-white text-uppercase font-weight-bold" routerLink="dashboard" (click)="collapseNavbar()">
+                    <span>
+                        <span jhiTranslate="global.menu.dashboard">Dashboard</span>
+                    </span>
+                    </a>
+                </li>                
+                <li ngbDropdown class="nav-item dropdown pointer" *ngIf="languages">
+                    <a class="nav-link dropdown-toggle text-white text-uppercase font-weight-bold" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown" *ngIf="languages.length > 1">
+                    <span>
+                        <span jhiTranslate="global.menu.language">Language</span>
+                    </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeIn" ngbDropdownMenu *ngIf="languages.length > 1">
+                        <li *ngFor="let language of languages">
+                            <a class="dropdown-item aDropDown" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a class="nav-link dropdown-toggle text-white text-uppercase font-weight-bold" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
+                  <span *ngIf="!getImageUrl()">
+                    <span jhiTranslate="global.menu.account.main">
+                      Account
+                    </span>
+                  </span>
+                        <span *ngIf="getImageUrl()">
+                      <img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">
+                  </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeIn" ngbDropdownMenu>
+                        <li *ngSwitchCase="true">
+                            <a class="dropdown-item aDropDown" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
+                                <i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
+                                <span jhiTranslate="global.menu.account.settings">Settings</span>
+                            </a>
+                        </li>
+                        <li *ngSwitchCase="true">
+                            <a class="dropdown-item aDropDown" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">
+                                <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+                                <span jhiTranslate="global.menu.account.password">Password</span>
+                            </a>
+                        </li>
+                        <li *ngSwitchCase="true">
+                            <a class="dropdown-item aDropDown" (click)="logout()" id="logout">
+                                <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
+                                <span jhiTranslate="global.menu.account.logout">Sign out</span>
+                            </a>
+                        </li>
+                        <li *ngSwitchCase="false">
+                            <a class="dropdown-item aDropDown" (click)="login()" id="login">
+                                <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>
+                                <span jhiTranslate="global.menu.account.login">Sign in</span>
+                            </a>
+                        </li>
+                        <li *ngSwitchCase="false">
+                            <a class="dropdown-item aDropDown" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">
+                                <i class="fa fa-fw fa-user-plus" aria-hidden="true"></i>
+                                <span jhiTranslate="global.menu.account.register">Register</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</ng-template>
+<!--  end second navbar -->

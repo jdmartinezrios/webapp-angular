@@ -1,0 +1,63 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title text-success font-weight-bold" id="myZoneLabel" jhiTranslate="delcampoApp.zone.home.createOrEditLabel">Create or edit a Zone</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!zone.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="zone.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.zone.zoneName" for="field_zoneName" [ngbTooltip]="'delcampoApp.zone.help.zoneName' | translate">Zone Name</label>
+            <input type="text" class="form-control" name="zoneName" id="field_zoneName"
+                [(ngModel)]="zone.zoneName" required maxlength="140" pattern="[0-9a-zA-Z áéíóúÁÉÍÓÚÑñ]*"/>
+            <div [hidden]="!(editForm.controls.zoneName?.dirty && editForm.controls.zoneName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.zoneName?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.zoneName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 140 }">
+                   This field cannot be longer than 140 characters.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.zoneName?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Zone Name' }">
+                    This field should follow pattern for "Zone Name".
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.zone.zoneEnabled" [ngbTooltip]="'delcampoApp.zone.help.zoneEnabled' | translate">Zone Enabled</label>
+            <input type="checkbox" class="form-control cmn-toggle cmn-toggle-round" name="zoneEnabled" id="field_zoneEnabled"
+                [(ngModel)]="zone.zoneEnabled" />
+                <label for="field_zoneEnabled"></label>
+            <div [hidden]="!(editForm.controls.zoneEnabled?.dirty && editForm.controls.zoneEnabled?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.zoneEnabled?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.zone.city" for="field_city">City</label>
+            <select class="form-control" id="field_city" name="city" [(ngModel)]="zone.cityId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="cityOption.id" *ngFor="let cityOption of cities; trackBy: trackCityById">{{cityOption.cityName}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

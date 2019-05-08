@@ -1,0 +1,30 @@
+
+{
+    "delcampoApp": {
+        "image" : {
+            "home": {
+                "title": "Imágenes",
+                "createLabel": "Crear nueva Imagen",
+                "createOrEditLabel": "Crear o editar Imagen",
+                "search": "Buscar Imagen"
+            },
+            "created": "Una nueva Imagen ha sido creada con el identificador {{ param }}",
+            "updated": "Una Imagen ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Imagen ha sido eliminada con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar la Imagen {{ id }}?"
+            },
+            "detail": {
+                "title": "Imagen"
+            },
+            "imageName": "Nombre",
+            "image": "Imagen",
+            "product": "Producto",
+            "recipe": "Receta",
+            "help": {
+                "imageName": "Nombre para identificar la imagen del producto",
+                "image": "Archivo de la imagen del producto"
+            }
+        }
+    }
+}

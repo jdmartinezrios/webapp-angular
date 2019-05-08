@@ -1,0 +1,30 @@
+
+{
+    "delcampoApp": {
+        "youtubeVideo" : {
+            "home": {
+                "title": "Youtube Videos",
+                "createLabel": "Create a new Youtube Video",
+                "createOrEditLabel": "Create or edit a Youtube Video",
+                "search": "Search for Youtube Video"
+            },
+            "created": "A new Youtube Video is created with identifier {{ param }}",
+            "updated": "A Youtube Video is updated with identifier {{ param }}",
+            "deleted": "A Youtube Video is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Youtube Video {{ id }}?"
+            },
+            "detail": {
+                "title": "Youtube Video"
+            },
+            "youtubeName": "Youtube Name",
+            "youtubeUrl": "Youtube Url",
+            "product": "Product",
+            "recipe": "Recipe",
+            "help": {
+                "youtubeName": "Name to identify video",
+                "youtubeUrl": "Url of video in youtube"
+            }
+        }
+    }
+}

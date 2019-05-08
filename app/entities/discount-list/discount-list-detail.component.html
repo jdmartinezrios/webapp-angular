@@ -1,0 +1,40 @@
+
+<div *ngIf="discountList">
+    <h2><span jhiTranslate="delcampoApp.discountList.detail.title">Discount List</span> {{discountList.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.discountList.startDate">Start Date</span></dt>
+        <dd>
+            <span>{{discountList.startDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.discountList.endDate">End Date</span></dt>
+        <dd>
+            <span>{{discountList.endDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.discountList.discount">Discount</span></dt>
+        <dd>
+            <span>{{discountList.discount}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.discountList.product">Product</span></dt>
+        <dd>
+            <div *ngIf="discountList.productId">
+                <a [routerLink]="['/product', discountList.productId]">{{discountList.productName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'discount-list/'+ discountList.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

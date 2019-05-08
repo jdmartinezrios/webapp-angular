@@ -1,0 +1,28 @@
+
+{
+    "delcampoApp": {
+        "manufacturedProductType" : {
+            "home": {
+                "title": "Manufactured Product Types",
+                "createLabel": "Create a new Manufactured Product Type",
+                "createOrEditLabel": "Create or edit a Manufactured Product Type",
+                "search": "Search for Manufactured Product Type"
+            },
+            "created": "A new Manufactured Product Type is created with identifier {{ param }}",
+            "updated": "A Manufactured Product Type is updated with identifier {{ param }}",
+            "deleted": "A Manufactured Product Type is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Manufactured Product Type {{ id }}?"
+            },
+            "detail": {
+                "title": "Manufactured Product Type"
+            },
+            "manufacturedProductTypeName": "Manufactured Product Type Name",
+            "manufacturedProductEnabled": "Manufactured Product Enabled",
+            "help": {
+                "manufacturedProductTypeName": "Name of type for manufactured products",
+                "manufacturedProductEnabled": "Manufacured Product Type: Enabled / Disabled"
+            }
+        }
+    }
+}

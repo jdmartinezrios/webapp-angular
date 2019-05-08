@@ -1,0 +1,26 @@
+
+{
+    "delcampoApp": {
+        "discountList" : {
+            "home": {
+                "title": "Discount Lists",
+                "createLabel": "Create a new Discount List",
+                "createOrEditLabel": "Create or edit a Discount List",
+                "search": "Search for Discount List"
+            },
+            "created": "A new Discount List is created with identifier {{ param }}",
+            "updated": "A Discount List is updated with identifier {{ param }}",
+            "deleted": "A Discount List is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Discount List {{ id }}?"
+            },
+            "detail": {
+                "title": "Discount List"
+            },
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "discount": "Discount",
+            "product": "Product"
+        }
+    }
+}

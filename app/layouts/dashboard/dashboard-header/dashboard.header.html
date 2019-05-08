@@ -1,0 +1,50 @@
+<div class="headerbar">
+
+  <!-- LOGO -->
+      <div class="headerbar-left" [ngClass]="test2()">
+        <a routerLink="/dashboard" class="logo"><img class="first-img" *ngIf="test3() !== 'reduceSide'" alt="Logo" src="../../../../content/images/LogoNavbar.png" /><img *ngIf="test3() !== 'extendedSide' && test3() !== null" alt="Logo" src="../../../../content/images/logoInicio.png" /></a>
+        <!-- <span class="font-weight-bold text-white">D<span [hidden]="test3() === 'reduceSide'">el</span>c<span [hidden]="test3() === 'reduceSide'">ampo</span></span> -->
+        <!-- <img alt="Logo" src="../../../../content/images/logoCampo.png" class="avatar-rounded" />  -->
+      </div>
+      <nav class="navbar-custom" [ngClass]="test3()">
+                  <ul class="list-inline float-right mb-0">
+                      <li class="list-inline-item dropdown notif">
+                          <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                              <!-- <img src="../../../../content/images/logoCampo.png" alt="Profile image" class="avatar-rounded"> -->
+                              <i style="font-size: 25px" class="fa fa-user-circle-o avatar-rounded"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right profile-dropdown animated fadeIn">
+                              <!-- item-->
+                              <div class="dropdown-item noti-title">
+                                  <h5 class="text-overflow"><small jhiTranslate="welcome">Hello</small> <small>{{settingsAccount.firstName}}</small> </h5>
+                              </div>
+
+                              <!-- item-->
+                              <a routerLink="/settings" class="dropdown-item notify-item">
+                                  <i class="fa fa-user"></i> <span  jhiTranslate="global.menu.account.settings">Profile</span>
+                              </a>
+
+                              <!-- item-->
+                              <a routerLink="/password" class="dropdown-item notify-item">
+                                  <i class="fa fa-key"></i> <span jhiTranslate="global.menu.account.password">Password</span>
+                              </a>
+
+                              <!-- item-->
+                              <a (click)="logout()" class="dropdown-item notify-item">
+                                  <i class="fa fa-power-off"></i> <span jhiTranslate="global.menu.account.logout">logout</span>
+                              </a>
+                              <!-- item-->
+                          </div>
+                      </li>
+
+                  </ul>
+
+                  <ul class="list-inline menu-left mb-0">
+                      <li class="float-left">
+                          <button class="button-menu-mobile open-left" (click)="toogleSideNav()">
+              <i class="fa fa-fw fa-bars text-white"></i>
+                          </button>
+                      </li>
+                  </ul>
+      </nav>
+</div>

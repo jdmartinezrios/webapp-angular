@@ -1,0 +1,98 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myDeliveryRouteLabel" jhiTranslate="delcampoApp.deliveryRoute.home.createOrEditLabel">Create or edit a Delivery Route</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!deliveryRoute.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="deliveryRoute.id" readonly />
+        </div>
+        <!-- div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.deliveryRoute.createDate" for="field_createDate">Create Date</label>
+            <div class="d-flex">
+                <input id="field_createDate" type="datetime-local" class="form-control" name="createDate" [(ngModel)]="deliveryRoute.createDate"
+                required/>
+            </div>
+            <div [hidden]="!(editForm.controls.createDate?.dirty && editForm.controls.createDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.createDate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.createDate?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div -->
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.deliveryRoute.scheduleDate" for="field_scheduleDate">Schedule Date</label>
+            <div class="input-group">
+                <input id="field_scheduleDate" type="text" class="form-control" name="scheduleDate" ngbDatepicker  #scheduleDateDp="ngbDatepicker" [(ngModel)]="deliveryRoute.scheduleDate"
+                required/>
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary" (click)="scheduleDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.scheduleDate?.dirty && editForm.controls.scheduleDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.scheduleDate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.deliveryRoute.vehicle" for="field_vehicle">Vehicle</label>
+            <select class="form-control" id="field_vehicle" name="vehicle" [(ngModel)]="deliveryRoute.vehicleId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="vehicleOption.id" *ngFor="let vehicleOption of vehicles; trackBy: trackVehicleById">{{vehicleOption.referenceVehicle}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.deliveryRoute.driver" for="field_driver">Driver</label>
+           <p-autoComplete
+                
+                [suggestions]="users"
+                [(ngModel)]="driver"
+                name="text"
+                placeholder="Email"
+                (completeMethod)="buscarUsuarios($event)"
+                field="email"
+                emptyMessage="conductor no encontrado"
+                [style]="{'width' : '100%'}"
+                [inputStyle]="{'width':'100%'}"
+                forceSelection="true">
+                <ng-template let-user pTemplate="item">
+                    <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                        {{user.email}}
+                    </div>
+                </ng-template>
+            </p-autoComplete>
+        </div>
+        <div class="form-group">
+            <!-- label jhiTranslate="delcampoApp.deliveryRoute.shipment" for="field_shipment">Shipment</label>
+            <select class="form-control" id="field_shipment" multiple name="shipment" [(ngModel)]="deliveryRoute.shipments">
+                <option [ngValue]="getSelected(deliveryRoute.shipments, invoiceOption)" *ngFor="let invoiceOption of invoices; trackBy: trackInvoiceById">{{invoiceOption.invoiceNumber}}</option>
+            </select -->
+            <div class="form-check" *ngFor="let invoice of invoices; let i = index" >
+                <label class="form-check-label" for="{{'checkbox' + (i + 1)}}">
+                    <input class="form-check-input" type="checkbox" id="{{'checkbox' + (i + 1)}}" name="{{'checkbox' + (i + 1)}}" value="{{authority}}" [checked]="shipmenIsAdded(invoice)" (click) = "addInvoice(invoice)" [disabled] = "invoice.invoiceStates ? invoice.invoiceStates[invoice.invoiceStates.length - 1].invoiceState == 'DELIVERED' : false">
+                    <span>{{invoice.id }} - {{invoice.invoiceStates ? invoice.invoiceStates[invoice.invoiceStates.length - 1].invoiceState : ''}}</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="(editForm.form.invalid || isSaving) || (deliveryRoute.shipments.length < 1 || !driver)" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

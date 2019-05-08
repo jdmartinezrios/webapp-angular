@@ -1,0 +1,30 @@
+
+<div *ngIf="youtubeVideo">
+    <h2><span jhiTranslate="delcampoApp.youtubeVideo.detail.title">Youtube Video</span> {{youtubeVideo.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.youtubeVideo.youtubeName" [ngbTooltip]="'delcampoApp.youtubeVideo.help.youtubeName' | translate">Youtube Name</span></dt>
+        <dd>
+            <span>{{youtubeVideo.youtubeName}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.youtubeVideo.youtubeUrl" [ngbTooltip]="'delcampoApp.youtubeVideo.help.youtubeUrl' | translate">Youtube Url</span></dt>
+        <dd>
+            <span>{{youtubeVideo.youtubeUrl}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'youtube-video/'+ youtubeVideo.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

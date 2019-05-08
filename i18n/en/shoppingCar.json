@@ -1,0 +1,26 @@
+
+{
+    "delcampoApp": {
+        "shoppingCar" : {
+            "home": {
+                "title": "Shopping Cars",
+                "createLabel": "Create a new Shopping Car",
+                "createOrEditLabel": "Create or edit a Shopping Car",
+                "search": "Search for Shopping Car"
+            },
+            "created": "A new Shopping Car is created with identifier {{ param }}",
+            "updated": "A Shopping Car is updated with identifier {{ param }}",
+            "deleted": "A Shopping Car is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Shopping Car {{ id }}?"
+            },
+            "detail": {
+                "title": "Shopping Car"
+            },
+            "addDate": "Add Date",
+            "quantity": "Quantity",
+            "product": "Product",
+            "user": "User"
+        }
+    }
+}

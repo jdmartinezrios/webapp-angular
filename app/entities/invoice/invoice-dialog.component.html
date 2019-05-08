@@ -1,0 +1,105 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myInvoiceLabel" jhiTranslate="delcampoApp.invoice.home.createOrEditLabel">Create or edit a Invoice</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!invoice.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="invoice.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.invoiceDate" for="field_invoiceDate">Invoice Date</label>
+            <div class="d-flex">
+                <input id="field_invoiceDate" type="datetime-local" class="form-control" name="invoiceDate" [(ngModel)]="invoice.invoiceDate"
+                required/>
+            </div>
+            <div [hidden]="!(editForm.controls.invoiceDate?.dirty && editForm.controls.invoiceDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.invoiceDate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.invoiceDate?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.invoiceNumber" for="field_invoiceNumber">Invoice Number</label>
+            <input type="text" class="form-control" name="invoiceNumber" id="field_invoiceNumber"
+                [(ngModel)]="invoice.invoiceNumber" required/>
+            <div [hidden]="!(editForm.controls.invoiceNumber?.dirty && editForm.controls.invoiceNumber?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.invoiceNumber?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.payed" for="field_payed">Payed</label>
+            <input type="checkbox" class="form-control" name="payed" id="field_payed"
+                [(ngModel)]="invoice.payed" />
+            <div [hidden]="!(editForm.controls.payed?.dirty && editForm.controls.payed?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.payed?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.paymentDate" for="field_paymentDate">Payment Date</label>
+            <div class="d-flex">
+                <input id="field_paymentDate" type="datetime-local" class="form-control" name="paymentDate" [(ngModel)]="invoice.paymentDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.surcharge" for="field_surcharge">Surcharge</label>
+            <input type="checkbox" class="form-control" name="surcharge" id="field_surcharge"
+                [(ngModel)]="invoice.surcharge" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.total" for="field_total">Total</label>
+            <input type="number" class="form-control" name="total" id="field_total"
+                [(ngModel)]="invoice.total" required/>
+            <div [hidden]="!(editForm.controls.total?.dirty && editForm.controls.total?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.total?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.total?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.customer" for="field_customer">Customer</label>
+            <select class="form-control" id="field_customer" name="customer" [(ngModel)]="invoice.customerId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="delcampoApp.invoice.location" for="field_location">Location</label>
+            <select class="form-control" id="field_location" name="location" [(ngModel)]="invoice.locationId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="locationOption.id" *ngFor="let locationOption of locations; trackBy: trackLocationById">{{locationOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

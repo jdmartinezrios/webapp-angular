@@ -1,0 +1,27 @@
+
+{
+    "delcampoApp": {
+        "priceList" : {
+            "home": {
+                "title": "Price Lists",
+                "createLabel": "Create a new Price List",
+                "createOrEditLabel": "Create or edit a Price List",
+                "search": "Search for Price List"
+            },
+            "created": "A new Price List is created with identifier {{ param }}",
+            "updated": "A Price List is updated with identifier {{ param }}",
+            "deleted": "A Price List is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Price List {{ id }}?"
+            },
+            "detail": {
+                "title": "Price List"
+            },
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "price": "Price",
+            "currency": "Currency",
+            "product": "Product"
+        }
+    }
+}

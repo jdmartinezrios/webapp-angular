@@ -1,0 +1,27 @@
+
+{
+    "delcampoApp": {
+        "priceList" : {
+            "home": {
+                "title": "Lista Precios",
+                "createLabel": "Crear nueva Lista Precio",
+                "createOrEditLabel": "Crear o editar Lista Precio",
+                "search": "Buscar Lista Precio"
+            },
+            "created": "Una nueva Lista Precio ha sido creada con el identificador {{ param }}",
+            "updated": "Una Lista Precio ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Lista Precio ha sido eliminada con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar la Lista Precio {{ id }}?"
+            },
+            "detail": {
+                "title": "Lista Precio"
+            },
+            "startDate": "Fecha Inicio",
+            "endDate": "Fecha Fin",
+            "price": "Precio",
+            "currency": "Moneda",
+            "product": "Producto"
+        }
+    }
+}

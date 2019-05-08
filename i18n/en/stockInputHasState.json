@@ -1,0 +1,26 @@
+
+{
+    "delcampoApp": {
+        "stockInputHasState" : {
+            "home": {
+                "title": "Stock Input Has States",
+                "createLabel": "Create a new Stock Input Has State",
+                "createOrEditLabel": "Create or edit a Stock Input Has State",
+                "search": "Search for Stock Input Has State"
+            },
+            "created": "A new Stock Input Has State is created with identifier {{ param }}",
+            "updated": "A Stock Input Has State is updated with identifier {{ param }}",
+            "deleted": "A Stock Input Has State is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Stock Input Has State {{ id }}?"
+            },
+            "detail": {
+                "title": "Stock Input Has State"
+            },
+            "registerDate": "Register Date",
+            "observations": "Observations",
+            "stockState": "Stock State",
+            "stockInput": "Stock Input"
+        }
+    }
+}

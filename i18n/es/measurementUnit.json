@@ -1,0 +1,10 @@
+{
+    "delcampoApp": {
+        "MeasurementUnit" : {
+            "null": "",
+            "LB": "Lb",
+            "KG": "Kg",
+            "UNIT": "Unidad"
+        }
+    }
+}

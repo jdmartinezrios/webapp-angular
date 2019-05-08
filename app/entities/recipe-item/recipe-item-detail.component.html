@@ -1,0 +1,40 @@
+
+<div *ngIf="recipeItem">
+    <h2><span jhiTranslate="delcampoApp.recipeItem.detail.title">Recipe Item</span> {{recipeItem.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.recipeItem.productNameText" [ngbTooltip]="'delcampoApp.recipeItem.help.productNameText' | translate">Product Name Text</span></dt>
+        <dd>
+            <span>{{recipeItem.productNameText}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipeItem.quantity" [ngbTooltip]="'delcampoApp.recipeItem.help.quantity' | translate">Quantity</span></dt>
+        <dd>
+            <span>{{recipeItem.quantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipeItem.measurementUnit" [ngbTooltip]="'delcampoApp.recipeItem.help.measurementUnit' | translate">Measurement Unit</span></dt>
+        <dd>
+            <span jhiTranslate="{{'delcampoApp.MeasurementUnit.' + recipeItem.measurementUnit}}">{{recipeItem.measurementUnit}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.recipeItem.product">Product</span></dt>
+        <dd>
+            <div *ngIf="recipeItem.productId">
+                <a [routerLink]="['/product', recipeItem.productId]">{{recipeItem.productName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'recipe-item/'+ recipeItem.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

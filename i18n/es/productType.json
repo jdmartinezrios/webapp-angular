@@ -1,0 +1,29 @@
+
+{
+    "delcampoApp": {
+        "productType" : {
+            "home": {
+                "title": "Tipos de Producto",
+                "createLabel": "Crear nuevo Tipo de Producto",
+                "createOrEditLabel": "Crear o editar Tipo de Producto",
+                "search": "Buscar Tipos de Producto"
+            },
+            "created": "Un nuevo Tipo de Producto ha sido creado con el identificador {{ param }}",
+            "updated": "Un Tipo de Producto ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Tipo de Producto ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el Tipo de Producto {{ id }}?"
+            },
+            "detail": {
+                "title": "Tipo de Producto"
+            },
+            "productTypeName": "Nombre Tipo de Producto",
+            "productTypeEnabled": "Estado Tipo de Producto",
+            "category": "Categoría",
+            "help": {
+                "productTypeName": "Nombre del tipo de producto para subclasificarlos",
+                "productTypeEnabled": "Estado: Activado / Desactivado"
+            }
+        }
+    }
+}

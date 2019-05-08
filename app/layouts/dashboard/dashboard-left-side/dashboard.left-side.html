@@ -1,0 +1,160 @@
+<div class="left main-sidebar" [ngClass]="sizeSideNav()">
+    <div class="sidebar-inner leftscroll">
+        <div id="sidebar-menu">
+            <ul>
+                <li class="submenu">
+                    <a class="active" routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fa fa-fw fa fa-th-large"></i>
+                        <span> Dashboard </span>
+                    </a>
+                </li>
+                <li class="submenu" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <a (click)="onClickMenuItem('administration')" [ngClass]="{'activo': linkActive.administration}">
+                        <i class="fa fa-fw fa-table"></i> <span> Administración </span>
+                        <span class="menu-arrow" id="arrow-administration"
+                              [ngClass]="{'arrowDown': linkActive.administration, 'arrowRight': !linkActive.administration}"></span>
+                    </a>
+                    <ul class="list-unstyled-1 ul-activo" [@slideIn] *ngIf="linkActive.administration">
+                        <li>
+                            <a routerLink="/user-management" routerLinkActive="active">
+                                <i class="fa fa-fw fa-user"></i> <span>Gestión de Usuarios</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/jhi-tracker" routerLinkActive="active">
+                                <i class="fa fa-fw fa-eye"></i> <span>Registro de Usuarios</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/jhi-metrics" routerLinkActive="active">
+                                <i class="fa fa-fw fa-tachometer"></i> <span>Métricas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/jhi-health" routerLinkActive="active">
+                                <i class="fa fa-fw fa-heart"></i> <span>Salud</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/jhi-configuration" routerLinkActive="active">
+                                <i class="fa fa-fw fa-list"></i><span>Configuración</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/audits" routerLinkActive="active">
+                                <i class="fa fa-fw fa-bell"></i><span>Auditorias</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/logs" routerLinkActive="active">
+                                <i class="fa fa-fw fa-tasks"></i><span>Logs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/docs" routerLinkActive="active">
+                                <i class="fa fa-fw fa-book"></i><span>API</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href='./h2-console' target="_blank">
+                                <i class="fa fa-fw fa-hdd-o"></i><span>Base de datos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="submenu" id="config-menu" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <a (click)="onClickMenuItem('config')" [ngClass]="{'activo': linkActive.config}">
+                        <i class="fa fa-fw fa-cube"></i> <span> Configuración </span>
+                        <span class="menu-arrow" id="arrow-config"
+                              [ngClass]="{'arrowDown': linkActive.config, 'arrowRight': !linkActive.config}"></span>
+                    </a>
+                    <ul class="list-unstyled-2 ul-activo" [@slideIn] *ngIf="linkActive.config">
+                        <li>
+                            <a routerLink="/country" routerLinkActive="active">
+                                <i class="fa fa-fw fa-flag"></i><span>Paises</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/state-province" routerLinkActive="active">
+                                <i class="fa fa-fw fa-building"></i><span>Departamentos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/city" routerLinkActive="active">
+                                <i class="fa fa-fw fa-location-arrow"></i><span>Ciudades</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/zone" routerLinkActive="active">
+                                <i class="fa fa-fw fa-street-view"></i><span>Barrios</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="submenu" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST', 'ROLE_PROV']">
+                    <a (click)="onClickMenuItem('products')" [ngClass]="{'activo': linkActive.products}">
+                        <i class="fa fa-fw fa-cogs"></i> <span>Gestión productos</span>
+                        <span class="menu-arrow" id="arrow-products"
+                              [ngClass]="{'arrowDown': linkActive.products, 'arrowRight': !linkActive.products}"></span>
+                    </a>
+                    <ul class="list-unstyled-3 ul-activo" [@slideIn] *ngIf="linkActive.products">
+                        <li class="submenu" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']">
+                            <a routerLink="/product-category" routerLinkActive="active">
+                                <i class="fa fa-fw fa-tv"></i> <span> Categorías </span></a>
+                        </li>
+                        <li class="submenu" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']">
+                            <a routerLink="/product-type" routerLinkActive="active">
+                                <i class="fa fa-fw fa-file-text-o"></i> <span> Subcategorías </span>
+                            </a>
+                        </li>
+                        <li class="submenu" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']">
+                            <a routerLink="/manufactured-product-type" routerLinkActive="active">
+                                <i class="fa fa-fw fa-barcode"></i> <span> Tipos Manufacturado </span>
+                            </a>
+                        </li>
+                        <li class="submenu">
+                            <a routerLink="/product" routerLinkActive="active">
+                                <i class="fa fa-fw fa-th"></i> <span> Productos </span>
+                            </a>
+                        </li>
+                        <li class="submenu" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']">
+                            <a routerLink="/recipe" routerLinkActive="active">
+                                <i class="fa fa-fw fa-cutlery"></i> <span> Recetas </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="submenu" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']">
+                    <a (click)="onClickMenuItem('deliveries')" [ngClass]="{'activo': linkActive.deliveries}">
+                        <i class="fa fa-truck"></i> <span>Gestión domicilios</span>
+                        <span class="menu-arrow" id="arrow-deliveries"
+                              [ngClass]="{'arrowDown': linkActive.deliveries, 'arrowRight': !linkActive.deliveries}"></span>
+                    </a>
+                    <ul class="list-unstyled-4 ul-activo" [@slideIn] *ngIf="linkActive.deliveries">
+                        <li class="submenu">
+                            <a routerLink="/pedidos" routerLinkActive="active">
+                                <i class="fa fa-fw fa-tv"></i> <span> Pedidos </span>
+                            </a>
+                        </li>
+
+                        <li class="submenu">
+                            <a routerLink="/delivery-route" routerLinkActive="active">
+                                <i class="fa fa-fw fa-file-text-o"></i> <span> Rutas </span>
+                            </a>
+                        </li>
+
+                        <li class="submenu">
+                            <a routerLink="/vehicle" routerLinkActive="active">
+                                <i class="fa fa-fw fa-barcode"></i> <span> Vehiculos </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

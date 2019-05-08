@@ -1,0 +1,88 @@
+<div>
+    <h2>
+        <span jhiTranslate="delcampoApp.product.home.title" class="text-success">Products</span>
+        <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']" class="btn btn-success float-right jh-create-entity create-product" [routerLink]="['/', { outlets: { popup: ['product-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="delcampoApp.product.home.createLabel">
+            Create new Product
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'delcampoApp.product.home.search' | translate }}">
+                    <button class="input-group-append btn btn-success" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="products">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th class="spacing-theads" jhiSortBy="name"><span jhiTranslate="delcampoApp.product.name">Name</span> <span class="fa fa-sort"></span></th>
+            <th class="spacing-theads" jhiSortBy="measurementUnit"><span jhiTranslate="delcampoApp.product.measurementUnit">Measurement Unit</span> <span class="fa fa-sort"></span></th>
+            <th class="spacing-theads" jhiSortBy="stock"><span jhiTranslate="delcampoApp.product.stock">Stock</span> <span class="fa fa-sort"></span></th>
+            <th class="spacing-theads" jhiSortBy="baseName"><span jhiTranslate="delcampoApp.product.base">Base</span> <span class="fa fa-sort"></span></th>
+            <th class="spacing-theads" jhiSortBy="typeProductTypeName"><span jhiTranslate="delcampoApp.product.type">Type</span> <span class="fa fa-sort"></span></th>
+            <th class="spacing-theads" jhiSortBy="categoryProductCategoryName"><span jhiTranslate="delcampoApp.product.category">Category</span> <span class="fa fa-sort"></span></th>
+            <th class="spacing-theads" jhiSortBy="manufacturedTypeManufacturedProductTypeName"><span jhiTranslate="delcampoApp.product.manufacturedType">Manufactured Type</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let product of products ;trackBy: trackId">
+                <td>{{product.name}}</td>
+                <td jhiTranslate="{{'delcampoApp.MeasurementUnit.' + product.measurementUnit}}">{{product.measurementUnit}}</td>
+                <td>{{product.stock}}</td>
+                <td>
+                    <div *ngIf="product.baseId">
+                        <a [routerLink]="['../product', product.baseId  ]" >{{product.baseName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="product.typeId">
+                        <a [routerLink]="['../product-type', product.typeId  ]" >{{product.typeProductTypeName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="product.categoryId">
+                        <a [routerLink]="['../product-category', product.categoryId  ]" >{{product.categoryProductCategoryName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="product.manufacturedTypeId">
+                        <a [routerLink]="['../manufactured-product-type', product.manufacturedTypeId  ]" >{{product.manufacturedTypeManufacturedProductTypeName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="d-flex justify-content-between">
+                        <div [routerLink]="['../product', product.id ]" class="buttons-options">
+                            <span class="fa fa-eye"></span>
+                        </div>
+                        <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']" [routerLink]="['/', { outlets: { popup: 'product/'+ product.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge" class="buttons-options">
+                            <span class="fa fa-pencil"></span>
+                        </div>
+                        <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_ASST']" [routerLink]="['/', { outlets: { popup: 'product/'+ product.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge" class="buttons-options">
+                            <span class="fa fa-trash"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+
+{
+    "delcampoApp": {
+        "invoice" : {
+            "home": {
+                "title": "Pedidos",
+                "createLabel": "Crear nuevo Invoice",
+                "createOrEditLabel": "Crear o editar Invoice",
+                "search": "Buscar un pedido"
+            },
+            "created": "Un nuevo Invoice ha sido creado con el identificador {{ param }}",
+            "updated": "Un Invoice ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Invoice ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Invoice {{ id }}?"
+            },
+            "detail": {
+                "title": "Invoice"
+            },
+            "invoiceDate": "Fecha de pedido",
+            "invoiceNumber": "Número de pedido",
+            "payed": "Pagado",
+            "paymentDate": "Fecha de pago",
+            "surcharge": "Surcharge",
+            "invoiceStates": "Invoice States",
+            "invoiceItems": "Invoice Items",
+            "customer": "Cliente",
+            "location": "Dirección",
+            "state": "Estado",
+            "pack": "Empacar"
+        }
+    }
+}

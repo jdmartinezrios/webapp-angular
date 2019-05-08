@@ -1,0 +1,31 @@
+
+{
+    "delcampoApp": {
+        "recipeItem" : {
+            "home": {
+                "title": "Recipe Items",
+                "createLabel": "Create a new Recipe Item",
+                "createOrEditLabel": "Create or edit a Recipe Item",
+                "search": "Search for Recipe Item"
+            },
+            "created": "A new Recipe Item is created with identifier {{ param }}",
+            "updated": "A Recipe Item is updated with identifier {{ param }}",
+            "deleted": "A Recipe Item is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Recipe Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Recipe Item"
+            },
+            "productNameText": "Product Name Text",
+            "quantity": "Quantity",
+            "measurementUnit": "Measurement Unit",
+            "product": "Product",
+            "help": {
+                "productNameText": "Name of product",
+                "quantity": "Quantity of product for recipe",
+                "measurementUnit": "Measurement Unit for the product"
+            }
+        }
+    }
+}

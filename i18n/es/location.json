@@ -1,0 +1,36 @@
+
+{
+    "delcampoApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Crear nuevo Location",
+                "createOrEditLabel": "Crear o editar Location",
+                "search": "Search for Location"
+            },
+            "created": "Un nuevo Location ha sido creado con el identificador {{ param }}",
+            "updated": "Un Location ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Location ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Location {{ id }}?"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "streetAddress": "Street Address",
+            "postalCode": "Postal Code",
+            "latitude": "Latitude",
+            "longitude": "Longitude",
+            "invoice": "Invoice",
+            "zone": "Zone",
+            "help": {
+                "name": "Name to identify the location",
+                "streetAddress": "Street address for this location",
+                "postalCode": "Optional postal code",
+                "latitude": "GMAP location latitude",
+                "longitude": "GMAP location longitude"
+            }
+        }
+    }
+}

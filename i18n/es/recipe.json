@@ -1,0 +1,35 @@
+
+{
+    "delcampoApp": {
+        "recipe" : {
+            "home": {
+                "title": "Recetas",
+                "createLabel": "Crear nueva Receta",
+                "createOrEditLabel": "Crear o editar Receta",
+                "search": "Buscar Receta"
+            },
+            "created": "Una nueva Receta ha sido creada con el identificador {{ param }}",
+            "updated": "Una Receta ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Receta ha sido eliminada con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Receta {{ id }}?"
+            },
+            "detail": {
+                "title": "Receta"
+            },
+            "name": "Nombre",
+            "personsQuantity": "Cantidad Porciones",
+            "description": "Descripción",
+            "recipeEnabled": "Activa / Inactiva",
+            "image": "Imagen",
+            "item": "Ingrediente",
+            "youtube": "Youtube",
+            "help": {
+                "name": "Nombre de la receta",
+                "personsQuantity": "Cantidad de porciones de la receta",
+                "description": "Modo de preparación de la receta",
+                "recipeEnabled": "Receta: Activa / Inactiva"
+            }
+        }
+    }
+}

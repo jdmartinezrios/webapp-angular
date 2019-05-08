@@ -1,0 +1,10 @@
+{
+    "delcampoApp": {
+        "Currency" : {
+            "null": "",
+            "COP": "COP",
+            "USD": "USD",
+            "EUR": "EUR"
+        }
+    }
+}

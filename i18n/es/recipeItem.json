@@ -1,0 +1,31 @@
+
+{
+    "delcampoApp": {
+        "recipeItem" : {
+            "home": {
+                "title": "Ingredientes",
+                "createLabel": "Crear nuevo Ingrediente",
+                "createOrEditLabel": "Crear o editar Ingrediente",
+                "search": "Buscar Ingrediente"
+            },
+            "created": "Un nuevo Ingrediente ha sido creado con el identificador {{ param }}",
+            "updated": "Un Ingrediente ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Ingrediente ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el Ingrediente {{ id }}?"
+            },
+            "detail": {
+                "title": "Ingrediente"
+            },
+            "productNameText": "Producto",
+            "quantity": "Cantidad",
+            "measurementUnit": "Unidad de Medida",
+            "product": "Producto",
+            "help": {
+                "productNameText": "Nombre del producto (Ingrediente)",
+                "quantity": "Cantidad del producto (Ingrediente) para la receta",
+                "measurementUnit": "Unidad de medida del producto"
+            }
+        }
+    }
+}

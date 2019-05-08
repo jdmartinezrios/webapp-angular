@@ -1,0 +1,27 @@
+
+{
+    "delcampoApp": {
+        "stateProvince" : {
+            "home": {
+                "title": "Departamentos",
+                "createLabel": "Crear nuevo Departamento",
+                "createOrEditLabel": "Crear o editar Departamento",
+                "search": "Buscar Departamento"
+            },
+            "created": "Un nuevo Departamento ha sido creado con el identificador {{ param }}",
+            "updated": "Un Departamento ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Departamento ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar el Departamento {{ id }}?"
+            },
+            "detail": {
+                "title": "Departamento"
+            },
+            "stateName": "Nombre",
+            "country": "País",
+            "help": {
+                "stateName": "Nombre del departamento"
+            }
+        }
+    }
+}

@@ -1,0 +1,102 @@
+<div>
+    <h2>
+        <span jhiTranslate="delcampoApp.productType.home.title" class="text-success">Product Types</span>
+        <button class="btn btn-success float-right jh-create-entity create-product-type" [routerLink]="['/', { outlets: { popup: ['product-type-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="delcampoApp.productType.home.createLabel">
+            Create new Product Type
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'delcampoApp.productType.home.search' | translate }}">
+                    <button class="input-group-append btn btn-success" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="productTypes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="delcampoApp.productType.productTypeName">Product Type Name</span></th>
+            <th><span jhiTranslate="delcampoApp.productType.productTypeEnabled">Product Type Enabled</span></th>
+            <th><span jhiTranslate="delcampoApp.productType.category">Category</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let productType of productTypes ;trackBy: trackId">
+                <td><a [routerLink]="['../product-type', productType.id ]">{{productType.id}}</a></td>
+                <td>{{productType.productTypeName}}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" (click)="setActive(productType, true)" *ngIf="!productType.productTypeEnabled"
+                            jhiTranslate="userManagement.deactivated">Deactivated</button>
+                    <button class="btn btn-success btn-sm" (click)="setActive(productType, false)" *ngIf="productType.productTypeEnabled"
+                            jhiTranslate="userManagement.activated">Activated</button>
+                </td>
+                <td>
+                    <div *ngIf="productType.categoryId">
+                        <a [routerLink]="['../product-category', productType.categoryId  ]" >{{productType.categoryProductCategoryName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <!-- <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../product-type', productType.id ]"
+                                class="btn btn-success btn-sm btnView">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'product-type/'+ productType.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-success btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                                [routerLink]="['/', { outlets: { popup: 'product-type/'+ productType.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div> -->
+                    <div class="d-flex justify-content-around">
+                        <div [routerLink]="['../product-type', productType.id ]" class="buttons-options">
+                            <span class="fa fa-eye"></span>
+                        </div>
+                        <div [routerLink]="['/', { outlets: { popup: 'product-type/'+ productType.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge" class="buttons-options">
+                            <span class="fa fa-pencil"></span>
+                        </div>
+                        <div [routerLink]="['/', { outlets: { popup: 'product-type/'+ productType.id + '/delete'} }]"
+                                replaceUrl="true"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                                queryParamsHandling="merge"
+                                class="buttons-options">
+                            <span class="fa fa-trash"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

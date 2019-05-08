@@ -1,0 +1,30 @@
+
+<div *ngIf="manufacturedProductType">
+    <h2><span jhiTranslate="delcampoApp.manufacturedProductType.detail.title">Manufactured Product Type</span> {{manufacturedProductType.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="delcampoApp.manufacturedProductType.manufacturedProductTypeName" [ngbTooltip]="'delcampoApp.manufacturedProductType.help.manufacturedProductTypeName' | translate">Manufactured Product Type Name</span></dt>
+        <dd>
+            <span>{{manufacturedProductType.manufacturedProductTypeName}}</span>
+        </dd>
+        <dt><span jhiTranslate="delcampoApp.manufacturedProductType.manufacturedProductEnabled" [ngbTooltip]="'delcampoApp.manufacturedProductType.help.manufacturedProductEnabled' | translate">Manufactured Product Enabled</span></dt>
+        <dd>
+            <span>{{manufacturedProductType.manufacturedProductEnabled}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'manufactured-product-type/'+ manufacturedProductType.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
